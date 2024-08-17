@@ -1,7 +1,6 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { HOST } from "@env";
-const HOST = 'https://5589-14-169-35-39.ngrok-free.app'
+import { HOST } from "@env";
 
 export const endpoints = {
     'currentUser': '/users/current-user/', //GET, PATCH
