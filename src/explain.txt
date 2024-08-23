@@ -2,3 +2,13 @@
 + to switch between 2 screen
     1. put them together StackNavigator
     2. put all StackNavigator (which contains screen that u wanna switch) to other StackNavigator
+
+
+Login: Replicate Storage -> Cart
+Add: Cart + selectedProduct (compare the difference be4 add)
+Logout: Storage + selectedProduct (compare the difference be4 add)
+
+Text:
+style={{flex: 1, flexWrap: 'wrap'}}
+numberOfLines={1}
+ellipsizeMode='tail'

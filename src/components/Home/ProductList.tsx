@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import {
     StyleSheet,
     Text,
-    FlatList,
+    ScrollView,
     View,
     Image,
     TouchableOpacity,
     Dimensions,
     NativeSyntheticEvent,
-    NativeScrollEvent
+    NativeScrollEvent,
+    RefreshControl
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome"
@@ -35,12 +36,11 @@ const ProductList = () => {
     const [data, setData] = useState<Product[]>([]);
     const [refreshing, setRefreshing] = useState(true);
     const [showScrollTopButton, setShowScrollTopButton] = useState(false);
-    const scrollViewRef = useRef<FlatList<Product>>(null);
+    const scrollViewRef = useRef<ScrollView>(null);
     const navigation = useNavigation<NavigationProp<any>>();
 
     const [page, setPage] = useState(1); // Current page
     const [hasMore, setHasMore] = useState(true); // Flag to check if there are more items to load
-
 
     useEffect(() => {
         fetchProducts(page, refreshing);
@@ -50,10 +50,9 @@ const ProductList = () => {
         try {
             const response = await api.get(endpoints.products(page));
             if (response.data.results.length > 0) {
-                if (refreshing) { //setData for page 1
+                if (refreshing) { // setData for page 1
                     setData(response.data.results);
-                }
-                else {
+                } else {
                     setData(prevProducts => [...prevProducts, ...response.data.results]);
                 }
                 setHasMore(response.data.next !== null);
@@ -62,8 +61,7 @@ const ProductList = () => {
             }
         } catch (error) {
             console.error('Error fetching products:', error);
-        }
-        finally {
+        } finally {
             setRefreshing(false);
         }
     };
@@ -79,23 +77,23 @@ const ProductList = () => {
                 });
             }
         } catch (error) {
-            console.error(`Error fetching product has id ${productId}:`, error);
+            console.error(`Error fetching product with id ${productId}:`, error);
         }
     };
 
-    const renderItemComponent = ({ item }: { item: Product }) => { // Render Component for Flatlist
+    const renderItemComponent = (item: Product) => {
         return (
-            <TouchableOpacity style={styles.containerProductCard} onPress={() => handleProductPress(item.id)}>
-                <Image style={styles.image} source={{ uri: item.images[0].image }} />
+            <TouchableOpacity key={item?.id.toString()} style={styles.containerProductCard} onPress={() => handleProductPress(item?.id)}>
+                <Image style={styles.image} source={{ uri: item?.images[0].image }} />
                 <View style={{ margin: 4 }}>
-                    <Text numberOfLines={2} ellipsizeMode="tail">{item.name}</Text>
+                    <Text numberOfLines={2} ellipsizeMode="tail">{item?.name}</Text>
                     <View style={styles.wrapRating}>
                         <FontAwesome name={"star"} size={10} color={"#e7700d"} />
-                        <Text style={{ fontSize: 8 }}>{Math.round(item.product_rating * 10) / 10}</Text>
+                        <Text style={{ fontSize: 8 }}>{Math.round(item?.product_rating * 10) / 10}</Text>
                     </View>
                     <View style={styles.wrapPriceSold}>
-                        <Text style={{ fontSize: 16, color: "#cf3131", textDecorationLine: 'underline' }}>{formatCurrency(item.price)}đ</Text>
-                        <Text style={{ fontSize: 10, color: "#6d696996" }}>{item.sold} sold</Text>
+                        <Text style={{ fontSize: 16, color: "#cf3131", textDecorationLine: 'underline' }}>{formatCurrency(item?.price)}đ</Text>
+                        <Text style={{ fontSize: 10, color: "#6d696996" }}>{item?.sold} sold</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -109,37 +107,39 @@ const ProductList = () => {
         fetchProducts(1);
     };
 
-
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-        const yOffset = event.nativeEvent.contentOffset.y;
-        setShowScrollTopButton(yOffset > 300);
+        const yOffset = event.nativeEvent.contentOffset.y; // currentPosition
+        const contentHeight = event.nativeEvent.contentSize.height;  // totalContentHeightScrollView
+        const scrollViewHeight = event.nativeEvent.layoutMeasurement.height;  // displayViewHeight
+        setShowScrollTopButton(yOffset > 250);
+        if (yOffset + scrollViewHeight >= contentHeight && hasMore) {
+            setPage(prevPage => prevPage + 1);
+        }
     };
 
     const scrollToTop = () => {
         if (scrollViewRef.current) {
-            scrollViewRef.current.scrollToOffset({ offset: 0, animated: true });
+            scrollViewRef.current.scrollTo({ y: 0, animated: true });
         }
     };
 
     return (
         <>
-            <FlatList
-                data={data}
-                renderItem={renderItemComponent}
-                keyExtractor={item => item.id.toString()}
-                numColumns={2}
-                refreshing={refreshing}
-                onRefresh={handleRefresh}
+            <ScrollView
+                contentContainerStyle={styles.scrollViewContent}
+                showsVerticalScrollIndicator={false}
 
-                onEndReached={() => hasMore && setPage(prevPage => prevPage + 1)}
-                onEndReachedThreshold={0.5}
-
-                style={{}}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
                 ref={scrollViewRef}
-                showsVerticalScrollIndicator={false}
-            />
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                }
+            >
+                <View style={styles.gridContainer}>
+                    {data.map(renderItemComponent)}
+                </View>
+            </ScrollView>
             {showScrollTopButton && (
                 <TouchableOpacity style={styles.scrollTopButton} onPress={scrollToTop}>
                     <AntDesign name="arrowup" size={24} color="white" />
@@ -151,11 +151,19 @@ const ProductList = () => {
 export default ProductList;
 
 const { width: screenWidth } = Dimensions.get('window');
-const containerWidth = screenWidth * 0.46 // 46% của width của thiết bị
+const containerWidth = screenWidth * 0.48
 const styles = StyleSheet.create({
+    scrollViewContent: {
+        paddingVertical: 10,
+    },
+    gridContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+    },
+
     containerProductCard: {
         height: 250,
-        marginLeft: 10,
         marginBottom: 10,
         width: containerWidth,
         backgroundColor: '#FFF',

@@ -37,7 +37,7 @@ const userShopConfirmationSlice = createSlice({
     name: 'userShopConfirmation',
     initialState,
     reducers: {
-        resetShopConfirmation: () => initialState,
+        clearShopConfirmation: () => initialState,
     },
     extraReducers: (builder) => {
         builder
@@ -57,5 +57,5 @@ const userShopConfirmationSlice = createSlice({
     }
 })
 
-export const {resetShopConfirmation} = userShopConfirmationSlice.actions
+export const {clearShopConfirmation} = userShopConfirmationSlice.actions
 export default userShopConfirmationSlice.reducer

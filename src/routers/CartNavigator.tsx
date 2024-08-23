@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { CartScreen } from '../screens';
 import { CartStackParamList } from './types';
 
-
+// navigate prodetail, payment
 const CartStack = createStackNavigator<CartStackParamList>();
 
 const CartNavigator = () => {

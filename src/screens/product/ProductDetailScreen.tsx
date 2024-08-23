@@ -78,12 +78,10 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
                             sold={sold} />
 
                         {/* Delivery */}
-                        <Delivery deliveryPrice={27000} />
+                        <Delivery/>  
 
                         {/* Shop */}
                         <Shop id={shop_id} />
-
-                        {/* Voucher */}
 
                         {/* Info */}
                         <Info material={details.material} manufactory={details.manufactory} />
@@ -111,6 +109,7 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
                                 price={price}
                                 colors={colors}
                                 images={images}
+                                shopId={shop_id}
                             />
                         )}
                     </View>

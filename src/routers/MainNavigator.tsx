@@ -7,6 +7,7 @@ import AuthNavigator from './AuthNavigator'
 import ExtensionNavigator from './ExtensionNavigator'
 import ProductNavigator from './ProductNavigator'
 import ReviewNavigator from './ReviewNavigator'
+import CartNavigator from './CartNavigator'
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -20,6 +21,7 @@ const MainNavigator = () => {
             <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
             <Stack.Screen name="ProductNavigator" component={ProductNavigator} />
             <Stack.Screen name="ReviewNavigator" component={ReviewNavigator} />
+            <Stack.Screen name="CartNavigator" component={CartNavigator} />
 
             <Stack.Screen name="SettingsNavigator" component={SettingsNavigator} />
             <Stack.Screen name="ExtensionNavigator" component={ExtensionNavigator} />

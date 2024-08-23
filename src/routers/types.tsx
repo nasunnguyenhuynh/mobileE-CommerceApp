@@ -4,6 +4,7 @@ export type RootStackParamList = {
     HomeNavigator: undefined;
     ProductNavigator: { screen: keyof ProductStackParamList; params?: any };
     ReviewNavigator: { screen: keyof ReviewStackParamList, params?: any };
+    CartNavigator: undefined;
     ShopNavigator: undefined;
     SettingsNavigator: undefined;
 };
@@ -27,6 +28,7 @@ export type HomeStackParamList = { //HomeNavigator
     ProfileScreen: undefined;
 
     ProductNavigator: { screen: keyof ProductStackParamList; params?: any };
+    CartNavigator: { screen: keyof CartStackParamList; params?: any };
 };
 
 export type ProfileStackParamList = { //ProfileNavigator

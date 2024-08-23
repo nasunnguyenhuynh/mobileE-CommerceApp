@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Modal, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import api, { endpoints } from '../../utils/api';
 import AntDesign from "react-native-vector-icons/AntDesign"
-
-interface Category {
-    id: number;
-    name: string;
-}
+import { Category } from '../../interfaces/category';
 
 interface ProductFilterProps {
     visible: boolean;

@@ -14,7 +14,7 @@ const ProductNavigator = () => {
             <ProductStack.Screen name="SearchProductScreen" component={SearchProductScreen}
                 options={{ headerShown: false }} />
 
-            <ProductStack.Screen name="ReviewScreen" component={ReviewScreen} />
+            {/* <ProductStack.Screen name="ReviewScreen" component={ReviewScreen} /> */}
             <ProductStack.Screen name="ShopScreen" component={ShopScreen} options={{ title: '' }} />
         </ProductStack.Navigator>
     );

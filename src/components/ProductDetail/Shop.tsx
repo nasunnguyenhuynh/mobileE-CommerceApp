@@ -7,29 +7,14 @@ import api, { endpoints } from '../../utils/api';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ShopStackParamList } from '../../routers/types';
+import { Shop as ShopInterface } from '../../interfaces/shop';
 
 type ShopScreenNavigationProp = StackNavigationProp<ShopStackParamList, 'ShopScreen'>;
 const Shop = ({ id = 0 }: { id: number }) => {
   //navigation
   const navigation = useNavigation<ShopScreenNavigationProp>();
-  //init shop state
-  interface Shop {
-    id: number,
-    name: string,
-    image: string,
-    following: number,
-    followed: number,
-    shop_rating: number
-  }
 
-  const [shop, setShop] = useState<Shop>({
-    id: 0,
-    name: '',
-    image: '',
-    following: 0,
-    followed: 0,
-    shop_rating: 0,
-  });
+  const [shop, setShop] = useState<ShopInterface>();
   //get shop info by id
   const [loading, setLoading] = useState(true);
   const getShopByID = async (id: number) => {
@@ -44,7 +29,6 @@ const Shop = ({ id = 0 }: { id: number }) => {
   }, [])
 
   const locationShop = "TP.Hồ Chí Minh";
-  const totalProducts = "37";
 
   return (
     <View style={styles.containerShop}>
@@ -59,11 +43,12 @@ const Shop = ({ id = 0 }: { id: number }) => {
               }}>
 
                 <Image
-                  source={{ uri: shop.image }}
+                  source={{ uri: shop?.image }}
                   style={styles.logoShop}
                 />
                 <View style={styles.wrapNameLocationShop}>
-                  <Text>{shop.name.length > 12 ? shop.name.substring(0, 12) + '...' : shop.name}</Text>
+                  {/*  */}
+                  <Text numberOfLines={1} ellipsizeMode='tail'>{shop && shop.name}</Text>
                   <View style={styles.locationShop}>
                     <Ionicons
                       name={"location-outline"}
@@ -88,11 +73,12 @@ const Shop = ({ id = 0 }: { id: number }) => {
 
             <View style={styles.wrapShopBottom}>
               <View style={styles.totalProduct}>
-                <Text style={{ color: colors.darkRed, fontSize: 10 }}>{totalProducts}</Text>
+                <Text style={{ color: colors.darkRed, fontSize: 10 }}>{shop && shop.total_product}</Text>
                 <Text style={{ marginLeft: 4, fontSize: 10 }}>Products</Text>
               </View>
               <View style={styles.rating}>
-                <Text style={{ color: colors.darkRed, fontSize: 10 }}>{Math.round(shop.shop_rating * 10) / 10}</Text>
+                <Text style={{ color: colors.darkRed, fontSize: 10 }}>
+                  {shop && Math.round(shop?.shop_rating * 10) / 10}</Text>
                 <Text style={{ marginLeft: 4, fontSize: 10 }}>Ratings</Text>
               </View>
             </View>
@@ -123,6 +109,7 @@ const styles = StyleSheet.create({
   },
   wrapNameLocationShop: {
     marginLeft: 10,
+    width: '70%'
   },
   nameShop: {},
   locationShop: {

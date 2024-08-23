@@ -7,26 +7,7 @@ import { AppDispatch } from '../../redux/store'
 import { useDispatch } from 'react-redux'
 import { currentUser } from '../../redux/user/userSlice';
 import store from '../../redux/store';
-
-
-interface user {
-    id: number,
-    username: string,
-    avatar: string
-}
-
-interface comment {
-    id: number,
-    content: string,
-    is_shop: boolean,
-    is_parent: boolean,
-    parent_comment: number | null
-}
-
-interface Comment {
-    user: user,
-    comment: comment
-}
+import { Comment } from '../../interfaces/comment'
 
 const emptyComment: Comment = {
     user: {

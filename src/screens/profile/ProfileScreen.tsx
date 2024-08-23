@@ -11,11 +11,13 @@ import { colors } from '../../constants/colors';
 // Redux
 import type { RootState, AppDispatch } from '../../redux/store';
 import { useSelector, useDispatch } from 'react-redux'
-import { currentUser, resetUser } from '../../redux/user/userSlice';
+import { currentUser, clearUser } from '../../redux/user/userSlice';
 import { logout } from '../../redux/auth/authSlice';
-import { getShopConfirmation, resetShopConfirmation } from '../../redux/user/userShopConfirmationSlice';
+import { getShopConfirmation, clearShopConfirmation } from '../../redux/user/userShopConfirmationSlice';
 import { clearCart } from '../../redux/cart/cartSlice';
-
+import { clearLocalStorage } from '../../redux/storage';
+import { loadCartFromStorage, saveCartToStorage } from '../../redux/storage';
+import store from '../../redux/store';
 // Navigation
 import { ProfileStackParamList, RootStackParamList } from '../../routers/types'
 import { useNavigation, CompositeNavigationProp } from '@react-navigation/native';
@@ -52,11 +54,16 @@ const ProfileScreen = () => {
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = () => { dispatch(currentUser()) };
 
-    const handleLogout = () => {
-        dispatch(resetShopConfirmation());
-        dispatch(resetUser());
+    const handleLogout = () => { //removeToken & resetState
+        console.log("LOGOUT");
+        console.log('profile_state', store.getState()?.cart);
+
+        saveCartToStorage(store.getState().cart?.productList, store.getState().auth?.token)
+        dispatch(clearShopConfirmation());
+        dispatch(clearCart())
+        dispatch(clearUser());
         dispatch(logout());
-        dispatch(clearCart());
+        // clearLocalStorage()
         navigation.navigate('Login');
     };
 
