@@ -1,54 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, Alert } from 'react-native';
 import api, { endpoints, authAPI } from '../../utils/api';
 import remainDateTime from '../../constants/remainDateTime';
 import formatCurrency from '../../constants/formatCurrency';
-
-interface Product {
-    id: number,
-    name: string
-}
-
-interface Category {
-    id: number,
-    name: string
-}
-
-interface PaymentMethod {
-    id: number,
-    name: string
-}
-
-interface Shipping {
-    id: number,
-    name: string,
-    fee: number
-}
-
-interface Condition {
-    id: number,
-    min_order_amount: number,
-    discount: number,
-    remain: number,
-    products: Product[],
-    categories: Category[],
-    payment_methods: PaymentMethod[],
-    shippings: Shipping[],
-}
-
-interface Voucher {
-    id: number,
-    active: boolean,
-    name: string,
-    code: string,
-    start_date: string,
-    end_date: string,
-    voucher_type_name: string,
-    conditions: Condition[] | []
-}
-
+import { Voucher, MyVoucher, Condition } from '../../interfaces/voucher';
+// redux
+import type { AppDispatch } from '../../redux/store';
+import { useDispatch } from 'react-redux'
+import { addVoucher } from '../../redux/voucher/voucherSlice';
 
 const VoucherList = () => {
+    const dispatch = useDispatch<AppDispatch>()
     const [vouchers, setVouchers] = useState<Voucher[]>([]);
 
     useEffect(() => {
@@ -59,18 +21,49 @@ const VoucherList = () => {
         try {
             const response = await api.get(endpoints.vouchers);
             if (response.status === 200 && response.data) {
-                setVouchers(response.data);
+                console.log('voucherData: ', response.data);
+                setVouchers(response.data.filter((voucher: Voucher) =>
+                    remainDateTime(voucher.end_date) !== "Time has passed."));
             }
         } catch (error) {
             console.error('vouchers not found', error);
         }
     };
 
+    const handleSaveVoucher = (voucher: Voucher, condition: Condition) => {
+        if (voucher.conditions.find(cond => cond.id === condition.id)?.remain) {
+            const myVoucher: MyVoucher = {
+                id: voucher.id,
+                name: voucher.name,
+                code: voucher.code,
+                is_multiple: voucher.is_multiple,
+                start_date: voucher.start_date,
+                end_date: voucher.end_date,
+                voucher_type_name: voucher.voucher_type_name,
+                conditions: [
+                    {
+                        id: condition.id,
+                        min_order_amount: condition.min_order_amount,
+                        discount: condition.discount,
+                        quantity: 1,
+                        products: condition.products,
+                        categories: condition.categories,
+                        payment_methods: condition.payment_methods,
+                        shippings: condition.shippings,
+                    }]
+            }
+            dispatch(addVoucher(myVoucher))
+        }
+        else {
+            Alert.alert("Noti", "Voucher not remain")
+        }
+
+    }
 
 
-    const VoucherCard = (item: Voucher) => {
+    const VoucherCard = (item: Voucher, condition: Condition) => {
         return (
-            <View key={item?.id.toString()} style={styles.card}>
+            <View key={item?.id.toString() + condition?.id.toString()} style={styles.card}>
                 <View style={styles.topSection}>
                     <View style={styles.labelContainer}>
                         <Text style={styles.labelText}>{item?.name}</Text>
@@ -82,19 +75,19 @@ const VoucherList = () => {
 
                 <View style={styles.middleSection}>
                     <Text style={styles.limitedText}>Limited quantity</Text>
-                    {item?.conditions.length > 0 && item?.conditions[0].discount ?
+                    {condition ?
                         <Text style={styles.discountText}>
-                            Discount: {formatCurrency(item?.conditions[0].discount)}đ
+                            Discount: {formatCurrency(condition.discount)}đ
                         </Text> : <></>}
-                    {item?.conditions.length > 0 && item?.conditions[0].min_order_amount ?
+                    {condition ?
                         <Text style={styles.orderText}>
-                            Min order: {formatCurrency(item?.conditions[0].min_order_amount)}đ
+                            Min order: {formatCurrency(condition.min_order_amount)}đ
                         </Text> : <></>}
                     <Text style={styles.videoText}>{item?.voucher_type_name}</Text>
                 </View>
-                {/* item?start_date */}
+
                 <View style={styles.bottomSection}>
-                    <TouchableOpacity style={styles.useLaterButton}>
+                    <TouchableOpacity style={styles.useLaterButton} onPress={() => { handleSaveVoucher(item, condition) }}>
                         <Text style={styles.useLaterText}>Save</Text>
                     </TouchableOpacity>
                     <View style={styles.expirationContainer}>
@@ -119,9 +112,8 @@ const VoucherList = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
         >
-            {vouchers.length > 0 ? vouchers.map(item => VoucherCard(item)) : <></>}
+            {vouchers.length > 0 ? vouchers.map(item => item.conditions.map(cond => VoucherCard(item, cond))) : <></>}
         </ScrollView>
-
     );
 };
 

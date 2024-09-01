@@ -9,15 +9,23 @@ import { SelectedProductList, SelectedProductDetail } from '../../interfaces/pro
 import ProductCard from './ProductCard';
 import api, { endpoints } from '../../utils/api';
 import { Shop } from '../../interfaces/shop';
+// redux
+import type { AppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleSelectedShop } from '../../redux/cart/cartSlice';
+import store from '../../redux/store';
 
-interface ShopCardProps extends SelectedProductList {
-    checkedShops: number[];
-    handleCheckedShop: (id: number) => void;
-}
-const ShopCard = ({ shopId = 0, products = [] }: ShopCardProps) => {
+const ShopCard = ({
+    shopId,
+    products,
+    isSelected }: SelectedProductList) => {
+    const dispatch = useDispatch();
+    const handleChange = () => {
+        dispatch(toggleSelectedShop({ shopId }));
+    };
     const [loading, setLoading] = useState(true);
     const [shop, setShop] = useState<Shop>();
-
+    const [productData, setProductData] = useState<SelectedProductDetail[] | undefined>([]);
 
     const getShopByID = async (id: number) => {
         const response = await api.get(endpoints.shop_id(id));
@@ -31,63 +39,19 @@ const ShopCard = ({ shopId = 0, products = [] }: ShopCardProps) => {
         getShopByID(shopId);
     }, [shopId]);
 
-    const [isCheckedShop, setIsCheckedShop] = useState(false);
-    const handleCheckedShop = (id: number) => {
-        setIsCheckedShop(!isCheckedShop)
-    }
-
-    //selectedProduct
-    const [selectedProduct, setSelectedProduct] =
-        useState<{ id: number, color: number | null, isChecked: boolean }[]>([])
-    //addProduct
-    const addProduct = (id: number, color: number | null, isChecked: boolean) => {
-        setSelectedProduct(preState => [...preState, { id, color, isChecked }])
-    }
-    //removeProduct
-    const removeProduct = (id: number, color: number | null, isChecked: boolean) => {
-        // convert product to false
-        console.log('selectedProduct ', selectedProduct);
-        const updatedProduct = selectedProduct.filter((product) => { return isChecked === true })
-        console.log('updatedProduct ', updatedProduct);
-
-        setSelectedProduct(updatedProduct)
-    }
-    const interactProduct = {
-        add: addProduct,
-        remove: removeProduct
-    }
-
-    const handleProductInteraction = ({ id, color, isChecked, action }:
-        { id: number, color: number | null, isChecked: boolean, action: 'add' | 'remove' }) => {
-        if (action in interactProduct) {
-            interactProduct[action](id, color, isChecked);
-        } else {
-            console.error(`Action ${action} is not valid.`);
-        }
-    };
-
-    // useEffect(() => {
-    //     console.log("Shop ", isCheckedShop);
-    // }, [isCheckedShop])
     useEffect(() => {
-        console.log("selectedProduct ", selectedProduct);
-        if (products.length === selectedProduct.length) {
-            setIsCheckedShop(true);
+        if (shop) {
+            setProductData(store.getState().cart.productList.find(shop => shop.shopId === shopId)?.products)
         }
-        else
-            if (isCheckedShop) {
-                setIsCheckedShop(false)
-            }
-    }, [selectedProduct])
-
+    }, [store.getState().cart.productList.find(shop => shop.shopId === shopId)?.products.length])
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => handleCheckedShop(shopId)}>
+                <TouchableOpacity onPress={() => handleChange()}>
                     <MaterialIcons
-                        name={isCheckedShop ? "check-box" : "check-box-outline-blank"}
+                        name={isSelected ? "check-box" : "check-box-outline-blank"}
                         size={30}
-                        color={isCheckedShop ? "#22a779" : "#ccc"}
+                        color={isSelected ? "#22a779" : "#ccc"}
                     />
                 </TouchableOpacity>
                 <View>
@@ -97,7 +61,7 @@ const ShopCard = ({ shopId = 0, products = [] }: ShopCardProps) => {
                 </View>
             </View>
             {/* product */}
-            {products.length > 0 && products.map((product, index) => (
+            {products?.length > 0 && products?.map((product, index) => (
                 <ProductCard
                     key={index}
                     shopId={shopId}
@@ -106,9 +70,6 @@ const ShopCard = ({ shopId = 0, products = [] }: ShopCardProps) => {
                     color={product.color}
                     quantity={product.quantity}
                     isSelected={false}
-
-                    checkedShop={isCheckedShop}
-                    checkedProductList={handleProductInteraction}
                 />
             ))}
             {/* Voucher */}
@@ -140,7 +101,6 @@ const ShopCard = ({ shopId = 0, products = [] }: ShopCardProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        // flexDirection: 'row',
         padding: 10,
         backgroundColor: '#fff',
         borderRadius: 5,
@@ -158,11 +118,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     checkbox: {
-        // width: 24,
-        // height: 24,
-        // borderColor: '#ccc',
-        // borderRadius: 5,
-        // borderWidth: 1,
         marginRight: 10,
     },
     // product

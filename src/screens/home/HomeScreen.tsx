@@ -8,22 +8,22 @@ import { Badge } from "react-native-elements";
 import { ProductList } from '../../components';
 import { VoucherList } from '../../components';
 // Redux
-import { AppDispatch } from '../../redux/store';
 import { useDispatch } from 'react-redux'
-import { loadCartFromStorage } from '../../redux/storage';
-import { currentUser } from '../../redux/user/userSlice';
+import { AppDispatch } from '../../redux/store';
 import store from '../../redux/store';
+import { loadCartFromStorage, loadVoucherFromStorage } from '../../redux/storage';
+import { currentUser } from '../../redux/user/userSlice';
 import { addProducts } from '../../redux/cart/cartSlice';
-import remainDateTime from '../../constants/remainDateTime';
+import { addVouchers } from '../../redux/voucher/voucherSlice';
 
 type Props = StackScreenProps<HomeStackParamList, 'HomeScreen'>;
 const HomeScreen = ({ navigation }: Props) => {
-    // console.log(remainDateTime('19/08/2024 00:00:00'));
     const numberMessage = 12;
     const [countProduct, setCountProduct] = useState(0);
     const [search, setSearch] = useState('');
     const [cartData, setCartData] = useState<any>(null);
-    //Get UserState & CartState from redux-store
+    const [voucherData, setVoucherData] = useState<any>(null);
+    // Get UserState, CartState, voucherState from redux-store
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
         const fetchCartData = async () => {
@@ -43,10 +43,22 @@ const HomeScreen = ({ navigation }: Props) => {
                 console.error('Failed to fetch cart data', error);
             }
         };
+        const fetchVoucherData = async () => {
+            try {
+                const data = await loadVoucherFromStorage(store.getState().auth?.token);
+                if (data) {
+                    dispatch(addVouchers(data))
+                }
+            } catch (error) {
+                console.error('Failed to fetch voucher data', error);
+            }
+        }
         if (!cartData) {
             fetchCartData();
         }
-        //store.getState().cart?.productList
+        if (!voucherData) {
+            fetchVoucherData();
+        }
     }, []);
 
     return (

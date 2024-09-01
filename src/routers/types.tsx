@@ -5,6 +5,7 @@ export type RootStackParamList = {
     ProductNavigator: { screen: keyof ProductStackParamList; params?: any };
     ReviewNavigator: { screen: keyof ReviewStackParamList, params?: any };
     CartNavigator: undefined;
+    PaymentNavigator: undefined;
     ShopNavigator: undefined;
     SettingsNavigator: undefined;
 };
@@ -81,6 +82,13 @@ export type SettingsStackParamList = {
 
 export type CartStackParamList = {
     CartScreen: undefined;
+    PaymentNavigator: { screen: keyof PaymentStackParamList; params?: any };
+};
+
+export type PaymentStackParamList = {
+    PaymentScreen: { data?: any };
+    // ReceiverInformationScreen: { data?: any }; // declare params for screen
+    ReceiverInformationScreen: undefined; // declare params for screen
 };
 
 export type ChatStackParamList = {

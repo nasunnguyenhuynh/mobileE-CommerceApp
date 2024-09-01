@@ -47,4 +47,5 @@ export interface SelectedProductDetail {
 export interface SelectedProductList {
     shopId: number;
     products: SelectedProductDetail[];
+    isSelected: boolean
 }

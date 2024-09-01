@@ -8,6 +8,8 @@ import ProfileScreen from "./profile/ProfileScreen"
 import SettingsScreen from "./profile/SettingsScreen"
 
 import CartScreen from "./cart/CartScreen"
+import PaymentScreen from "./payment/PaymentScreen"
+import ReceiverInformationScreen from "./payment/ReceiverInformationScreen"
 
 import ChatScreen from "./chat/ChatScreen"
 import ChatSpecificScreen from "./chat/ChatSpecificScreen"
@@ -34,6 +36,8 @@ export { // Export Screen
     SettingsScreen,
 
     CartScreen,
+    PaymentScreen,
+    ReceiverInformationScreen,
 
     ChatScreen,
     ChatSpecificScreen,

@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SelectedProductList } from "../../interfaces/product";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CART_KEY } from "../storage";
 
 interface Cart {
     productList: SelectedProductList[]
+    isSelectAll: boolean
 }
 
 const initialState: Cart = {
-    productList: []
-};
-
+    productList: [],
+    isSelectAll: false
+}
 // sample
 // productList = [
 // {
@@ -27,7 +26,7 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addProduct: (state, action: PayloadAction<SelectedProductList>) => {
-            const { products, shopId } = action.payload;
+            const { products, shopId, isSelected } = action.payload;
             const productDetail = products[0];
             // Find the shop by shopId
             const shop = state.productList.find(product => product.shopId === shopId);
@@ -59,60 +58,109 @@ const cartSlice = createSlice({
                             quantity: productDetail.quantity,
                             isSelected: productDetail.isSelected
                         }
-                    ]
+                    ],
+                    isSelected
                 });
             }
         },
         addProducts: (state, action: PayloadAction<SelectedProductList[]>) => {
             state.productList = [...action.payload]
         },
-        removeProduct: (state, action: PayloadAction<SelectedProductList>) => {
-            const { products, shopId } = action.payload;
-            const productDetail = products[0];
+        removeProduct: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
+            const { shopId, productId, color } = action.payload;
+            const shop = state.productList.find(shop => shop.shopId === shopId)
+            if (shop) { // Check if delete shop?
+                if (shop.products.length === 1) {
+                    state.productList = state.productList.filter(product => product.shopId !== shopId);
+                }
+                if (shop.products.length > 1) {
+                    const productIndex = shop.products.findIndex(
+                        item => item.id === productId && item.color === color
+                    );
 
-            // Find the shop by shopId
-            const shop = state.productList.find(product => product.shopId === shopId);
-            if (shop) {
-                // Find the index of the product in the shop's products array
-                console.log('shop_found ', shop);
-
-                const productIndex = shop.products.findIndex(
-                    item => item.id === productDetail.id && item.color === productDetail.color
-                );
-                console.log('findidx ', productIndex);
-
-                if (productIndex !== -1) {
-                    // If the product is found, remove it from the array
-                    shop.products.splice(productIndex, 1);
-                    console.log('shop_updated ', shop);
-                    // If the shop has no more products, remove the shop from the productList
-                    if (shop.products.length === 0) {
-                        console.log('shop_removed ', shop);
-                        state.productList = state.productList.filter(product => product.shopId !== shopId);
-                    }
+                    state.productList.find(shop => shop.shopId === shopId)?.products.splice(productIndex, 1)
                 }
             }
         },
-        toggleSelectedProduct: (state,
-            action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
+        increaseProductQuantity: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
             const { shopId, productId, color } = action.payload;
-
-            // Find the shop by shopId
             const shop = state.productList.find(shop => shop.shopId === shopId);
 
             if (shop) {
-                // Find the product by productId and color
                 const product = shop.products.find(p => p.id === productId && p.color === color);
 
                 if (product) {
-                    // Toggle the isSelected value
-                    product.isSelected = !product.isSelected;
+                    product.quantity += 1;
                 }
             }
+        },
+        decreaseProductQuantity: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
+            const { shopId, productId, color } = action.payload;
+            const shop = state.productList.find(shop => shop.shopId === shopId);
+
+            if (shop) {
+                const product = shop.products.find(p => p.id === productId && p.color === color);
+
+                if (product) {
+                    product.quantity -= 1;
+                }
+            }
+        },
+        toggleSelectedProduct: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
+            const { shopId, productId, color } = action.payload;
+            const shop = state.productList.find(shop => shop.shopId === shopId);
+
+            if (shop) {
+                const product = shop.products.find(p => p.id === productId && p.color === color);
+
+                if (product) {
+                    product.isSelected = !product.isSelected;
+                    console.log('product ', product);
+                }
+                
+                // Update shop's isSelected based on products' isSelected
+                
+                shop.isSelected = shop.products.every(p => p.isSelected);
+                console.log('shop ', shop);
+            }
+
+            // Update selectAll based on all shops' isSelected
+            state.isSelectAll = state.productList.every(shop => shop.isSelected);
+        },
+        toggleSelectedShop: (state, action: PayloadAction<{ shopId: number }>) => {
+            const { shopId } = action.payload;
+            const shop = state.productList.find(shop => shop.shopId === shopId);
+
+            if (shop) {
+                const isSelected = !shop.isSelected;
+                shop.isSelected = isSelected;
+
+                // Update all products in the shop
+                shop.products.forEach(product => {
+                    product.isSelected = isSelected;
+                });
+            }
+
+            // Update selectAll based on all shops' isSelected
+            state.isSelectAll = state.productList.every(shop => shop.isSelected);
+        },
+        toggleSelectAll: (state) => {
+            const isSelectAll = !state.isSelectAll;
+
+            // Update all shops and products based on isSelectAll
+            state.productList.forEach(shop => {
+                shop.isSelected = isSelectAll;
+                shop.products.forEach(product => {
+                    product.isSelected = isSelectAll;
+                });
+            });
+
+            state.isSelectAll = isSelectAll;
         },
         clearCart: () => initialState,
     }
 })
 
-export const { addProduct, addProducts, toggleSelectedProduct, removeProduct, clearCart } = cartSlice.actions;
+export const { addProduct, addProducts, removeProduct, increaseProductQuantity, decreaseProductQuantity,
+    toggleSelectedProduct, toggleSelectedShop, toggleSelectAll, clearCart } = cartSlice.actions;
 export default cartSlice.reducer

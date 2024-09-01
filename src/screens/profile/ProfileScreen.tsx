@@ -15,6 +15,7 @@ import { currentUser, clearUser } from '../../redux/user/userSlice';
 import { logout } from '../../redux/auth/authSlice';
 import { getShopConfirmation, clearShopConfirmation } from '../../redux/user/userShopConfirmationSlice';
 import { clearCart } from '../../redux/cart/cartSlice';
+import { clearVoucher } from '../../redux/voucher/voucherSlice';
 import { clearLocalStorage } from '../../redux/storage';
 import { loadCartFromStorage, saveCartToStorage } from '../../redux/storage';
 import store from '../../redux/store';
@@ -57,13 +58,15 @@ const ProfileScreen = () => {
     const handleLogout = () => { //removeToken & resetState
         console.log("LOGOUT");
         console.log('profile_state', store.getState()?.cart);
+        console.log('voucher', store.getState()?.voucher);
 
         saveCartToStorage(store.getState().cart?.productList, store.getState().auth?.token)
-        dispatch(clearShopConfirmation());
+        dispatch(clearShopConfirmation())
         dispatch(clearCart())
-        dispatch(clearUser());
-        dispatch(logout());
-        // clearLocalStorage()
+        dispatch(clearVoucher())
+        dispatch(clearUser())
+        dispatch(logout())
+        //clearLocalStorage()
         navigation.navigate('Login');
     };
 

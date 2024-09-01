@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { HOST } from "@env";
-const HOST = 'https://71e5-14-169-84-114.ngrok-free.app'
+import { HOST } from "@env";
+
 
 export const endpoints = {
     'currentUser': '/users/current-user/', //GET, PATCH
@@ -29,8 +29,7 @@ export const endpoints = {
 
     'shopConfirmation': (userId) => `/users/${userId}/shop-confirmation/`, //GET, POST
 
-    'addresses': (userId) => `/users/${userId}/addresses/`, //GET, POST
-    'addressDefault': (userId, addressId) => `/users/${userId}/addresses/${addressId}/default/`, //PATCH
+    'address-phone': (userId) => `/users/${userId}/address-phone/`, //GET, POST, DELETE, PATCH
 
     'order': (userId) => `/users/${userId}/orders/`, //GET, POST
     'payment': '/payment',
@@ -38,7 +37,6 @@ export const endpoints = {
 
 export const authAPI = async () => {
     const token = await AsyncStorage.getItem('access_token');
-    // console.log('Token: ', token);
 
     return axios.create({
         baseURL: HOST,

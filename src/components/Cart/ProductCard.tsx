@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import formatCurrency from '../../constants/formatCurrency';
 import api, { endpoints } from '../../utils/api';
 import { Product } from '../../interfaces/product';
@@ -7,14 +7,15 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import { SelectedProductList, SelectedProductDetail } from '../../interfaces/product';
 // redux
 import type { AppDispatch } from '../../redux/store';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import store from '../../redux/store';
-import { toggleSelectedProduct } from '../../redux/cart/cartSlice';
+import {
+    toggleSelectedProduct, removeProduct,
+    increaseProductQuantity, decreaseProductQuantity
+} from '../../redux/cart/cartSlice';
 
 interface ProductCardProps extends SelectedProductDetail {
     shopId: number;
-    checkedShop: boolean;
-    checkedProductList: (params: { id: number; color: number | null; isChecked: boolean, action: "add" | "remove" }) => void;
 }
 
 const ProductCard = ({
@@ -23,8 +24,6 @@ const ProductCard = ({
     quantity,
     isSelected,
     shopId,
-    checkedShop,
-    checkedProductList
 }: ProductCardProps) => {
     // cartSlice
     const dispatch = useDispatch<AppDispatch>()
@@ -44,41 +43,47 @@ const ProductCard = ({
         getProductByID(id);
     }, [id]);
 
-
     const getColorName = (id: number): string | undefined => {
         const color = product?.colors.find(color => color.id === id);
         return color ? color.name : undefined;
     };
 
-    const [checkedProduct, setCheckedProduct] = useState(checkedShop);
-    useEffect(() => {
-        if (checkedShop) {
-            const shop = store.getState().cart.productList.find(shop => shop.shopId === shopId);
-            const notSelectedProducts = shop?.products.filter(product => !product.isSelected) || [];
-            if (notSelectedProducts.length > 0) {
-                notSelectedProducts.forEach(product => {
-                    dispatch(toggleSelectedProduct({ shopId, productId: product.id, color }));
-                });
-                setCheckedProduct(checkedShop)
-            }
+
+    const handleCheckedProduct = () => {
+        dispatch(toggleSelectedProduct({ shopId, productId: id, color }));
+    }
+
+    const handleIncrease = () => {
+        dispatch(increaseProductQuantity({ shopId, productId: id, color }))
+    }
+
+    const handleRemoveProduct = () => {
+        Alert.alert(
+            'Remove Product',
+            'Are you sure you want to remove this product?',
+            [
+                {
+                    text: 'No',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Yes',
+                    onPress: () => dispatch(removeProduct({ shopId, productId: id, color })),
+                },
+            ],
+            { cancelable: true }
+        );
+    }
+
+    const handleDecrease = () => {
+        const productQuantity = store.getState().cart.productList.find(product => product.shopId === shopId)?.products.find(product => product.id === id)?.quantity
+        if (productQuantity && productQuantity > 1) {
+            dispatch(decreaseProductQuantity({ shopId, productId: id, color }))
         }
-        if (!checkedShop) {
-            const shop = store.getState().cart.productList.find(shop => shop.shopId === shopId);
-            const selectedProducts = shop?.products.filter(product => product.isSelected) || [];
-            if (selectedProducts.length > 0) {
-                selectedProducts.forEach(product => {
-                    dispatch(toggleSelectedProduct({ shopId, productId: product.id, color }));
-                });
-                setCheckedProduct(checkedShop)
-            }
+        else if (productQuantity === 1) {
+            handleRemoveProduct()
         }
-    }, [checkedShop])
-    const handleCheckedProduct = (shopId: number, productId: number, color: number | null) => {
-        dispatch(toggleSelectedProduct({ shopId, productId, color }));  // productSlice
-        const isChecked = !checkedProduct
-        const action = isChecked ? 'add' : 'remove'
-        checkedProductList({ id, color, isChecked, action })
-        setCheckedProduct(!checkedProduct) // productCardState <-> ShopCard
     }
 
     return (
@@ -88,12 +93,13 @@ const ProductCard = ({
                     <View style={styles.containerProduct}>
                         <TouchableOpacity
                             style={styles.checkbox}
-                            onPress={() => handleCheckedProduct(shopId, id, color)}
+                            onPress={() => handleCheckedProduct()}
                         >
                             <MaterialIcons
-                                name={checkedProduct ? "check-box" : "check-box-outline-blank"}
+                                name={store.getState().cart.productList.find(shop => { return shop.shopId === shopId })?.products.find(product => { return product.isSelected === true && product.id === id }) ? "check-box" : "check-box-outline-blank"}
                                 size={30}
-                                color={checkedProduct ? "#22a779" : "#ccc"} />
+                                color={store.getState().cart.productList.find(shop => { return shop.shopId === shopId })?.products.find(product => { return product.isSelected === true && product.id === id }) ? "#22a779" : "#ccc"}
+                            />
                         </TouchableOpacity>
                         <View style={styles.detailProduct}>
                             <Image source={{ uri: product?.images[0].image }} style={styles.image} />
@@ -105,13 +111,13 @@ const ProductCard = ({
 
                                     <View style={styles.quantityContainer}>
                                         <TouchableOpacity
-                                            // onPress={onDecrease}
+                                            onPress={handleDecrease}
                                             style={styles.button}>
                                             <Text>-</Text>
                                         </TouchableOpacity>
-                                        <Text style={styles.quantity}>{quantity}</Text>
+                                        <Text style={styles.quantity}>{store.getState().cart.productList.find(product => product.shopId === shopId)?.products.find(product => product.id === id)?.quantity}</Text>
                                         <TouchableOpacity
-                                            // onPress={onIncrease}
+                                            onPress={handleIncrease}
                                             style={styles.button}>
                                             <Text>+</Text>
                                         </TouchableOpacity>
@@ -122,16 +128,7 @@ const ProductCard = ({
                     </View> :
                     <TouchableOpacity
                         style={[styles.containerProduct, styles.containerinvalidProduct]}
-                    // onPress={() => {
-                    //     console.log(`product ${id} removed`);
-
-                    //     const selectedProduct: SelectedProductList = {
-                    //         shopId,
-                    //         products: [{ id, color, quantity }]
-                    //     };
-                    //     dispatch(removeProduct(selectedProduct))
-                    //     setProduct(null)
-                    // }}
+                    onPress={handleRemoveProduct}
                     >
                         <View style={styles.checkbox} />
                         <View style={styles.detailProduct}>
@@ -153,11 +150,6 @@ const ProductCard = ({
 
 const styles = StyleSheet.create({
     checkbox: {
-        // width: 24,
-        // height: 24,
-        // borderColor: '#ccc',
-        // borderRadius: 5,
-        // borderWidth: 1,
         marginRight: 10,
     },
     // product

@@ -137,7 +137,8 @@ const AddToCart: React.FC<AddToCartProps> =
                       const isSelected = false;
                       const selectedProduct: SelectedProductList = {
                         shopId,
-                        products: [{ id, color: selectedProductColor?.id || null, quantity, isSelected }]
+                        products: [{ id, color: selectedProductColor?.id || null, quantity, isSelected }],
+                        isSelected
                       };
                       dispatch(addProduct(selectedProduct)); // Add to cartSlice (can be renewd after log out)
                       toggleModal();
