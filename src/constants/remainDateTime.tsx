@@ -21,12 +21,12 @@ const remainDateTime = (startDateStr: string): string => {
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
     let remainingTime = "Remaining time: ";
-    if (years > 0) return remainingTime += `${years} years `;
-    if (months > 0) return remainingTime += `${months} months `;
-    if (days > 0) return remainingTime += `${days} days `;
-    if (hours > 0) return remainingTime += `${hours} hours `;
-    if (minutes > 0) return remainingTime += `${minutes} minutes `;
-    if (seconds > 0) return remainingTime += `${seconds} seconds`;
+    if (years > 0) return `${years} years `;
+    if (months > 0) return `${months} months `;
+    if (days > 0) return `${days} days `;
+    if (hours > 0) return `${hours} hours `;
+    if (minutes > 0) return `${minutes} minutes `;
+    if (seconds > 0) return `${seconds} seconds`;
 
     return remainingTime;
 }

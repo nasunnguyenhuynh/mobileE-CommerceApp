@@ -1,20 +1,23 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { PaymentScreen, ReceiverInformationScreen } from '../screens';
+import { 
+    PaymentScreen, 
+    PaymentMethodScreen, 
+    ReceiverInformationScreen, 
+    ShippingUnitScreen, 
+    SelectingVoucherScreen } from '../screens';
 import { PaymentStackParamList } from './types';
 
-// navigate prodetail, payment
 const PaymentStack = createStackNavigator<PaymentStackParamList>();
 
 const PaymentNavigator = () => {
     return (
         <PaymentStack.Navigator>
             <PaymentStack.Screen name="PaymentScreen" component={PaymentScreen} />
-            <PaymentStack.Screen name="ReceiverInformationScreen" component={ReceiverInformationScreen}
-                options={{
-                    // title: 'Address and Phone List'
-                    // headerShown: false
-                }} />
+            <PaymentStack.Screen name="PaymentMethodScreen" component={PaymentMethodScreen} />
+            <PaymentStack.Screen name="ReceiverInformationScreen" component={ReceiverInformationScreen} />
+            <PaymentStack.Screen name="ShippingUnitScreen" component={ShippingUnitScreen} />
+            <PaymentStack.Screen name="SelectingVoucherScreen" component={SelectingVoucherScreen} />
         </PaymentStack.Navigator>
     );
 };

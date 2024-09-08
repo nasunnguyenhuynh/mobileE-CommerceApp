@@ -58,6 +58,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/imagepicker_provider_paths" />
         </provider>
+        <provider
+            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+            android:authorities="com.mobileecommerce.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
 
         <activity
             android:name="com.facebook.react.devsupport.DevSettingsActivity"

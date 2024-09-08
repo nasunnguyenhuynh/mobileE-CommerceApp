@@ -1,4 +1,3 @@
-// src/navigation/SettingsNavigator.tsx
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ShopScreen } from '../screens';

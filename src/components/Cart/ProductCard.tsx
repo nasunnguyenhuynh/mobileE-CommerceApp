@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import formatCurrency from '../../constants/formatCurrency';
 import api, { endpoints } from '../../utils/api';
 import { Product } from '../../interfaces/product';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
-import { SelectedProductList, SelectedProductDetail } from '../../interfaces/product';
+import { SelectedProductDetail } from '../../interfaces/product';
 // redux
 import type { AppDispatch } from '../../redux/store';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import store from '../../redux/store';
 import {
     toggleSelectedProduct, removeProduct,
@@ -76,8 +76,15 @@ const ProductCard = ({
         );
     }
 
+    var productQuantity = store.getState().cart.productList.
+        find(shop => shop.shopId === shopId)?.products.
+        find(product => product.id === id && product.color === color)?.quantity
+
+    var isCheckedBox = store.getState().cart.productList
+        .find(shop => shop.shopId === shopId)?.products
+        .find(product => product.isSelected === true && product.id === id && product.color === color);
+
     const handleDecrease = () => {
-        const productQuantity = store.getState().cart.productList.find(product => product.shopId === shopId)?.products.find(product => product.id === id)?.quantity
         if (productQuantity && productQuantity > 1) {
             dispatch(decreaseProductQuantity({ shopId, productId: id, color }))
         }
@@ -96,9 +103,9 @@ const ProductCard = ({
                             onPress={() => handleCheckedProduct()}
                         >
                             <MaterialIcons
-                                name={store.getState().cart.productList.find(shop => { return shop.shopId === shopId })?.products.find(product => { return product.isSelected === true && product.id === id }) ? "check-box" : "check-box-outline-blank"}
+                                name={isCheckedBox ? "check-box" : "check-box-outline-blank"}
                                 size={30}
-                                color={store.getState().cart.productList.find(shop => { return shop.shopId === shopId })?.products.find(product => { return product.isSelected === true && product.id === id }) ? "#22a779" : "#ccc"}
+                                color={isCheckedBox ? "#22a779" : "#ccc"}
                             />
                         </TouchableOpacity>
                         <View style={styles.detailProduct}>
@@ -115,7 +122,7 @@ const ProductCard = ({
                                             style={styles.button}>
                                             <Text>-</Text>
                                         </TouchableOpacity>
-                                        <Text style={styles.quantity}>{store.getState().cart.productList.find(product => product.shopId === shopId)?.products.find(product => product.id === id)?.quantity}</Text>
+                                        <Text style={styles.quantity}>{productQuantity}</Text>
                                         <TouchableOpacity
                                             onPress={handleIncrease}
                                             style={styles.button}>
@@ -128,7 +135,7 @@ const ProductCard = ({
                     </View> :
                     <TouchableOpacity
                         style={[styles.containerProduct, styles.containerinvalidProduct]}
-                    onPress={handleRemoveProduct}
+                        onPress={handleRemoveProduct}
                     >
                         <View style={styles.checkbox} />
                         <View style={styles.detailProduct}>

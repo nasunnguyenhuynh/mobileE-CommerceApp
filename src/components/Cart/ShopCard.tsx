@@ -116,67 +116,7 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 18,
         fontWeight: 'bold',
-    },
-    checkbox: {
-        marginRight: 10,
-    },
-    // product
-    containerProduct: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-    },
-    detailProduct: {
-        flexDirection: 'row',
-    },
-    image: {
-        width: 100,
-        height: 100,
-        marginRight: 10,
-        borderRadius: 5,
-    },
-    detailsContainer: {
-        flex: 1,
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#000'
-    },
-    variant: {
-        fontSize: 14,
-        color: '#888',
-    },
-    price: {
-        fontSize: 18,
-        color: '#f00',
-        fontWeight: 'bold',
-    },
-    quantityContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 10
-    },
-    button: {
-        padding: 5,
-        backgroundColor: '#eee',
-        borderRadius: 5,
-    },
-    quantity: {
-        marginHorizontal: 10,
-    },
-    editButton: {
-        marginTop: 10,
-        padding: 5,
-        backgroundColor: '#eee',
-        borderRadius: 5,
-    },
-    removeButton: {
-        marginTop: 5,
-        padding: 5,
-        backgroundColor: '#eee',
-        borderRadius: 5,
-    },
+    }
 });
 
 export default ShopCard;

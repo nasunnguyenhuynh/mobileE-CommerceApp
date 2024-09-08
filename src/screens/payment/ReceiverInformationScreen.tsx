@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
 import AntDesign from "react-native-vector-icons/AntDesign"
 import Fontisto from "react-native-vector-icons/Fontisto"
-import Ionicons from "react-native-vector-icons/Ionicons"
 import { colors } from '../../constants/colors'
 import api, { authAPI, endpoints } from "../../utils/api";
 import useModal from '../../hooks/useModal'
 import { ReInfo } from '../../components'
+// interfaces
 import { ReceiverInformation } from '../../interfaces/receiverinfo'
-//navigation
+// navigation
 import { StackScreenProps } from '@react-navigation/stack';
 import { PaymentStackParamList } from '../../routers/types'
 // redux
 import type { AppDispatch } from '../../redux/store';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addReInfoList } from '../../redux/reInfo/receiverInformationSlice'
 import store from '../../redux/store'
 
 type Props = StackScreenProps<PaymentStackParamList, 'ReceiverInformationScreen'>;
-const ReceiverInformationScreen = ({ route, navigation }: Props) => {
+const ReceiverInformationScreen = ({ navigation }: Props) => {
     const dispatch = useDispatch<AppDispatch>()
     //Init 
     var initReceiverInfo = {
@@ -50,13 +50,11 @@ const ReceiverInformationScreen = ({ route, navigation }: Props) => {
                 if (ReInfoList.status === 200 && ReInfoList.data) {
                     dispatch(addReInfoList(ReInfoList.data))
                     navigation.navigate('PaymentScreen',
-                        { data: ReInfoList.data.find((item: ReceiverInformation) => item.default) })
+                        { receiverInformationList: ReInfoList.data.find((item: ReceiverInformation) => item.default) })
                 }
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
-        } finally {
-            // setLoadingUserData(false)
         }
     }
 
@@ -107,7 +105,7 @@ const ReceiverInformationScreen = ({ route, navigation }: Props) => {
         <ScrollView>
             <View>
                 <View style={{ marginHorizontal: 10, marginBottom: 50, }}>
-                    {/* Modal */}
+                    {/* Modal for creating and updating ReInfo*/}
                     {isModalVisible && (
                         <ReInfo
                             visible={isModalVisible}

@@ -29,7 +29,7 @@ export interface Voucher extends Product {
     conditions: Condition[] | []
 }
 // for voucherSlice
-interface VoucherCondition extends Omit<Condition, 'remain'> {
+export interface VoucherCondition extends Omit<Condition, 'remain'> {
     quantity: number;
 }
 
@@ -41,3 +41,25 @@ export interface MyVoucher extends Product {
     voucher_type_name: string;
     conditions: VoucherCondition[] | [];
 }
+
+export const createMyVoucher = (voucher: Voucher, condition: Condition): MyVoucher => ({
+    id: voucher.id,
+    name: voucher.name,
+    code: voucher.code,
+    is_multiple: voucher.is_multiple,
+    start_date: voucher.start_date,
+    end_date: voucher.end_date,
+    voucher_type_name: voucher.voucher_type_name,
+    conditions: [
+        {
+            id: condition.id,
+            min_order_amount: condition.min_order_amount,
+            discount: condition.discount,
+            quantity: 1,
+            products: condition.products,
+            categories: condition.categories,
+            payment_methods: condition.payment_methods,
+            shippings: condition.shippings,
+        }
+    ]
+});

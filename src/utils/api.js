@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HOST } from "@env";
 
 
+
 export const endpoints = {
     'currentUser': '/users/current-user/', //GET, PATCH
     'login': '/accounts/login/',
@@ -14,6 +15,7 @@ export const endpoints = {
     'categories': '/categories/',
     'shipping-unit': '/shipping-unit/',
     'vouchers': '/vouchers/',
+    'voucher': (voucherId, conditionId) => `vouchers/${voucherId}/condition/${conditionId}/`,
     'shop_id': (id) => `shops/${id}/`,
 
     'products': (page) => `/products/?page=${page}`,
@@ -32,7 +34,8 @@ export const endpoints = {
     'address-phone': (userId) => `/users/${userId}/address-phone/`, //GET, POST, DELETE, PATCH
 
     'order': (userId) => `/users/${userId}/orders/`, //GET, POST
-    'payment': '/payment',
+    'payment-method': '/payment-method/',
+    'payment': '/payment/',
 }
 
 export const authAPI = async () => {

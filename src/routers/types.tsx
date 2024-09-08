@@ -1,3 +1,7 @@
+import { Product } from "../interfaces/product";
+import { PaymentMethod } from "../interfaces/category";
+import { ShippingUnit } from "../interfaces/shipping";
+import { MyVoucher } from "../interfaces/voucher";
 export type RootStackParamList = {
     AuthNavigator: undefined;
     ExtensionNavigator: { screen: string };
@@ -6,6 +10,7 @@ export type RootStackParamList = {
     ReviewNavigator: { screen: keyof ReviewStackParamList, params?: any };
     CartNavigator: undefined;
     PaymentNavigator: undefined;
+    VoucherNavigator: { screen: keyof VoucherStackParamList, params?: any };
     ShopNavigator: undefined;
     SettingsNavigator: undefined;
 };
@@ -40,55 +45,55 @@ export type ProfileStackParamList = { //ProfileNavigator
 };
 
 export type ProductStackParamList = { //ProductNavigator
-    ProductDetailScreen: { //from ProductList -> ProductDetailScreen
-        data: {
-            id: number;
-            name: string;
-            price: number;
-            images: { id: number; image: string }[];
-            videos: { id: number; video: string }[];
-            colors: { id: number; name: string; image: string }[];
-            details: {
-                material: string;
-                manufactory: string;
-                description: string;
-            };
-            sold: number;
-            product_rating: number;
-            category: number;
-            shop_id: number;
-        };
-    };
+    ProductDetailScreen: { data: Product }; //from ProductList -> ProductDetailScreen
     SearchProductScreen: { data: string };
-
     ReviewNavigator: { screen: keyof ReviewStackParamList, params?: any }; //from ProductDetailScreen -> ReviewScreen
     ShopScreen: undefined;
 };
 
-export type ShopStackParamList = {
+export type ShopStackParamList = { // ShopNavigator
     ShopScreen: undefined;
 };
 
-export type ReviewStackParamList = { //ReviewNavigator
+export type ReviewStackParamList = { // ReviewNavigator
     ReviewScreen: { product_id: string };
     ReviewFormScreen: undefined;
 };
 
 
-export type SettingsStackParamList = {
+export type SettingsStackParamList = { // SettingNavigator
     SettingsScreen: undefined;
     ProfileScreen: undefined;
 };
 
-export type CartStackParamList = {
+export type CartStackParamList = { // CartNavigator
     CartScreen: undefined;
     PaymentNavigator: { screen: keyof PaymentStackParamList; params?: any };
 };
 
-export type PaymentStackParamList = {
-    PaymentScreen: { data?: any };
-    // ReceiverInformationScreen: { data?: any }; // declare params for screen
-    ReceiverInformationScreen: undefined; // declare params for screen
+export type PaymentStackParamList = { // PaymentNavigator
+    PaymentScreen: { // declare params for screen
+        receiverInformationList?: any,
+        selectedPaymentMethod?: PaymentMethod,
+        selectedShippingUnit?: ShippingUnit,
+        selectedVoucherList?: MyVoucher[]
+    };
+    PaymentMethodScreen: undefined;
+    ReceiverInformationScreen: undefined;
+    ShippingUnitScreen: undefined;
+    SelectingVoucherScreen: {
+        totalProductPrice: number,
+        selectedProductList: Product[],
+        selectedPaymentMethod: PaymentMethod,
+        selectedShippingUnit: ShippingUnit
+    };
+    VoucherNavigator: { screen: keyof VoucherStackParamList, params?: any };
+    PaymentResultScreen: { url: string };
+    HomeNavigator: { screen: keyof HomeStackParamList; params?: any };
+};
+
+export type VoucherStackParamList = { // VoucherNavigator
+    VoucherConditionScreen: undefined;
 };
 
 export type ChatStackParamList = {

@@ -6,6 +6,7 @@ import VoucherList from "./Voucher/VoucherList";
 import ShopCard from "./Cart/ShopCard";
 import ProductCard from "./Cart/ProductCard";
 import ReInfo from "./Payment/ReInfo";
+import Notify from "./Alert/Notify";
 export {
     ProductList,
     ExtensionElement,
@@ -14,5 +15,6 @@ export {
     VoucherList,
     ShopCard,
     ProductCard,
-    ReInfo
+    ReInfo,
+    Notify,
 }

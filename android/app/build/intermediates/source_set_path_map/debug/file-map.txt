@@ -45,3 +45,4 @@ com.mobileecommerce.app-packaged_res-43 D:\mobileE-CommerceApp\node_modules\reac
 com.mobileecommerce.app-packaged_res-44 D:\mobileE-CommerceApp\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
 com.mobileecommerce.app-packaged_res-45 D:\mobileE-CommerceApp\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
 com.mobileecommerce.app-packaged_res-46 D:\mobileE-CommerceApp\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug
+com.mobileecommerce.app-packaged_res-47 D:\mobileE-CommerceApp\node_modules\react-native-webview\android\build\intermediates\packaged_res\debug

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, TextInput, } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../routers/types";
 import Ionicons from "react-native-vector-icons/Ionicons"

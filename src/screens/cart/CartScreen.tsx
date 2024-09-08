@@ -3,11 +3,10 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'rea
 import { StackScreenProps } from '@react-navigation/stack';
 import { CartStackParamList } from '../../routers/types'
 import { ShopCard } from '../../components';
-import AntDesign from "react-native-vector-icons/AntDesign"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
-
+import { Notify } from '../../components'
 // Redux
-import type { RootState, AppDispatch } from '../../redux/store';
+import type { RootState } from '../../redux/store';
 import { useSelector, useDispatch } from 'react-redux'
 import store from '../../redux/store';
 import { toggleSelectAll } from '../../redux/cart/cartSlice';
@@ -19,8 +18,6 @@ const CartScreen = ({ navigation }: Props) => {
     const dispatch = useDispatch();
     const { productList } = useSelector((state: RootState) => state.cart);
     const { isSelectAll } = useSelector((state: RootState) => state.cart);
-    // Modal
-    const transparent = 'rgba(0,0,0,0.5)';
     const [openModel, setOpenModal] = useState(false);
 
     const handleSelectAllChange = () => {
@@ -83,34 +80,7 @@ const CartScreen = ({ navigation }: Props) => {
                     <Text style={styles.purchaseText}>Purchase</Text>
                 </TouchableOpacity>
             </View>
-            <Modal
-                visible={openModel}
-                animationType="fade"
-                transparent={true}
-            >
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    <View style={{
-                        position: "absolute",
-                        backgroundColor: transparent,
-                        padding: 15,
-                        width: "60%",
-                        borderRadius: 10,
-                    }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            <AntDesign name="infocirlce" size={30} color="#fff" />
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            <Text style={{ fontSize: 16, color: '#fff' }}>Please choose the product</Text>
-                        </View>
-                    </View>
-                </View>
-            </Modal>
+            {openModel && <Notify visible={openModel} text="Please choose the product" />}
         </View>
     );
 }

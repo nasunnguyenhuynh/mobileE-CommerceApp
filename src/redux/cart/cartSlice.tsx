@@ -96,14 +96,15 @@ const cartSlice = createSlice({
         },
         decreaseProductQuantity: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
             const { shopId, productId, color } = action.payload;
-            const shop = state.productList.find(shop => shop.shopId === shopId);
-
-            if (shop) {
-                const product = shop.products.find(p => p.id === productId && p.color === color);
-
-                if (product) {
-                    product.quantity -= 1;
+            const product = state.productList.
+                find(shop => shop.shopId === shopId)?.products.
+                find(p => p.id === productId && p.color === color);
+            if (product) {
+                if (product.quantity === 1) {
+                    removeProduct({ shopId, productId, color })
                 }
+                else
+                    product.quantity -= 1;
             }
         },
         toggleSelectedProduct: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
@@ -117,9 +118,9 @@ const cartSlice = createSlice({
                     product.isSelected = !product.isSelected;
                     console.log('product ', product);
                 }
-                
+
                 // Update shop's isSelected based on products' isSelected
-                
+
                 shop.isSelected = shop.products.every(p => p.isSelected);
                 console.log('shop ', shop);
             }
