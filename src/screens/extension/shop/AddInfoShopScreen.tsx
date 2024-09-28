@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, Platform } from 'react-native'
-import { authAPI } from '../../../utils/api'
+import { authAPI, endpoints } from '../../../utils/api'
 
 //Redux
 import store from '../../../redux/store'
@@ -198,13 +198,13 @@ const AddInfoShopScreen = ({ navigation }: Props) => {
             formData.append('shop_description', shopDescription);
             //  Send ShopConfirmation
             const axiosInstance = await authAPI();
-            axiosInstance.patch(`/users/${store.getState().user.info?.id}/shop-confirmation/`, formData, {
+            axiosInstance.patch(endpoints.shopConfirmation(store.getState().user.info?.id), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             })
                 .then(async response => {
-                    if (response.status === 201 && response?.data) {
+                    if (response.status === 200 && response?.data) {
                         console.log(response.data)
                         navigation.navigate('ProfileScreen')
                     }

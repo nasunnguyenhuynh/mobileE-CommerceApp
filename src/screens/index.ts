@@ -5,7 +5,8 @@ import VerifyOTP from "./auth/VerifyOTP"
 
 import HomeScreen from "./home/HomeScreen"
 import ProfileScreen from "./profile/ProfileScreen"
-import SettingsScreen from "./profile/SettingsScreen"
+import EditProfileScreen from "./profile/EditProfileScreen"
+import SettingsScreen from "./setting/SettingsScreen"
 
 import CartScreen from "./cart/CartScreen"
 import PaymentScreen from "./payment/PaymentScreen"
@@ -17,19 +18,25 @@ import PaymentResultScreen from "./payment/PaymentResultScreen"
 
 import VoucherConditionScreen from "./voucher/VoucherConditionScreen"
 
-import ChatScreen from "./chat/ChatScreen"
-import ChatSpecificScreen from "./chat/ChatSpecificScreen"
-
 import ShopScreen from "./shop/ShopScreen"
 
 import ProductDetailScreen from "./product/ProductDetailScreen"
 import SearchProductScreen from "./product/SearchProductScreen"
+import ProductComparisionScreen from "./product/ProductComparisionScreen"
 
 import ExtensionActivityScreen from "./extension/activity/ExtensionActivityScreen"
 import ExtensionShopScreen from "./extension/shop/ExtensionShopScreen"
 
 import ReviewScreen from "./review/ReviewScreen"
 import ReviewFormScreen from "./review/ReviewFormScreen"
+
+import OrderScreen from "./order/OrderScreen"
+import OrderConfirmingScreen from "./order/OrderConfirmingScreen"
+import OrderPackingScreen from "./order/OrderPackingScreen"
+import OrderDeliveringScreen from "./order/OrderDeliveringScreen"
+import OrderDeliveredScreen from "./order/OrderDeliveredScreen"
+import OrderCanceledScreen from "./order/OrderCanceledScreen"
+import OrderReturnedScreen from "./order/OrderReturnedScreen"
 
 export { // Export Screen
     Login,
@@ -39,6 +46,7 @@ export { // Export Screen
 
     HomeScreen,
     ProfileScreen,
+    EditProfileScreen,
     SettingsScreen,
 
     CartScreen,
@@ -51,16 +59,22 @@ export { // Export Screen
 
     VoucherConditionScreen,
 
-    ChatScreen,
-    ChatSpecificScreen,
-
     ShopScreen,
 
     ProductDetailScreen,
     SearchProductScreen,
+    ProductComparisionScreen,
     ExtensionActivityScreen,
     ExtensionShopScreen,
 
     ReviewScreen,
     ReviewFormScreen,
+
+    OrderScreen,
+    OrderConfirmingScreen,
+    OrderPackingScreen,
+    OrderDeliveringScreen,
+    OrderDeliveredScreen,
+    OrderCanceledScreen,
+    OrderReturnedScreen
 }

@@ -25,7 +25,7 @@ const Description = ({ description = '' }: { description: string }) => {
 
       {opened && (
         <View style={styles.content}>
-          <Text>
+          <Text style={{ color: '#000' }}>
             {description}
           </Text>
         </View>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     textTransform: 'capitalize',
+    color: '#000'
   },
   content: {
     marginTop: 8,

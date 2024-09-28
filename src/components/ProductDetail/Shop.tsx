@@ -48,7 +48,7 @@ const Shop = ({ id = 0 }: { id: number }) => {
                 />
                 <View style={styles.wrapNameLocationShop}>
                   {/*  */}
-                  <Text numberOfLines={1} ellipsizeMode='tail'>{shop && shop.name}</Text>
+                  <Text numberOfLines={1} ellipsizeMode='tail' style={{ color: '#000' }}>{shop && shop.name}</Text>
                   <View style={styles.locationShop}>
                     <Ionicons
                       name={"location-outline"}
@@ -74,12 +74,12 @@ const Shop = ({ id = 0 }: { id: number }) => {
             <View style={styles.wrapShopBottom}>
               <View style={styles.totalProduct}>
                 <Text style={{ color: colors.darkRed, fontSize: 10 }}>{shop && shop.total_product}</Text>
-                <Text style={{ marginLeft: 4, fontSize: 10 }}>Products</Text>
+                <Text style={{ marginLeft: 4, fontSize: 10, color: '#000' }}>Products</Text>
               </View>
               <View style={styles.rating}>
                 <Text style={{ color: colors.darkRed, fontSize: 10 }}>
                   {shop && Math.round(shop?.shop_rating * 10) / 10}</Text>
-                <Text style={{ marginLeft: 4, fontSize: 10 }}>Ratings</Text>
+                <Text style={{ marginLeft: 4, fontSize: 10, color: '#000' }}>Ratings</Text>
               </View>
             </View>
           </>

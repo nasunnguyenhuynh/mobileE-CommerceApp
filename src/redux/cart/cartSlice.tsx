@@ -3,12 +3,14 @@ import { SelectedProductList } from "../../interfaces/product";
 
 interface Cart {
     productList: SelectedProductList[]
-    isSelectAll: boolean
+    isSelectAll: boolean,
+    total: number
 }
 
 const initialState: Cart = {
     productList: [],
-    isSelectAll: false
+    isSelectAll: false,
+    total: 0
 }
 // sample
 // productList = [
@@ -46,6 +48,8 @@ const cartSlice = createSlice({
                         quantity: productDetail.quantity,
                         isSelected: productDetail.isSelected
                     });
+                    state.total += 1;
+
                 }
             } else {
                 // If the shop doesn't exist, add a new shop with the product
@@ -61,23 +65,27 @@ const cartSlice = createSlice({
                     ],
                     isSelected
                 });
+                state.total += 1;
             }
         },
         addProducts: (state, action: PayloadAction<SelectedProductList[]>) => {
             state.productList = [...action.payload]
+            state.total = action.payload.reduce((total, shop) => total + shop.products.length, 0)
+            console.log('state.total', state.total);
+
         },
         removeProduct: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
             const { shopId, productId, color } = action.payload;
             const shop = state.productList.find(shop => shop.shopId === shopId)
             if (shop) { // Check if delete shop?
                 if (shop.products.length === 1) {
-                    state.productList = state.productList.filter(product => product.shopId !== shopId);
+                    state.productList = state.productList.filter(shop => shop.shopId !== shopId);
+                    state.total -= 1;
                 }
                 if (shop.products.length > 1) {
                     const productIndex = shop.products.findIndex(
                         item => item.id === productId && item.color === color
                     );
-
                     state.productList.find(shop => shop.shopId === shopId)?.products.splice(productIndex, 1)
                 }
             }
@@ -100,11 +108,7 @@ const cartSlice = createSlice({
                 find(shop => shop.shopId === shopId)?.products.
                 find(p => p.id === productId && p.color === color);
             if (product) {
-                if (product.quantity === 1) {
-                    removeProduct({ shopId, productId, color })
-                }
-                else
-                    product.quantity -= 1;
+                product.quantity -= 1;
             }
         },
         toggleSelectedProduct: (state, action: PayloadAction<{ shopId: number, productId: number, color: number | null }>) => {
@@ -113,16 +117,12 @@ const cartSlice = createSlice({
 
             if (shop) {
                 const product = shop.products.find(p => p.id === productId && p.color === color);
-
                 if (product) {
                     product.isSelected = !product.isSelected;
-                    console.log('product ', product);
                 }
 
                 // Update shop's isSelected based on products' isSelected
-
                 shop.isSelected = shop.products.every(p => p.isSelected);
-                console.log('shop ', shop);
             }
 
             // Update selectAll based on all shops' isSelected

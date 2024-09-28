@@ -85,6 +85,7 @@ const ReviewProductScreen = ({ route }: { route: any }) => {
                             fontSize: 16,
                             fontWeight: "500",
                             textTransform: 'capitalize',
+                            color: '#000'
                         }}>Product Reviews</Text>
                     </View>
                     <View style={styles.commentsRatingsTitleDetail}>

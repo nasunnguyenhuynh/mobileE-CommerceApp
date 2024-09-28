@@ -1,0 +1,289 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.mobileecommerce"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:3:5-67
+11-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:3:22-64
+12    <uses-permission android:name="android.permission.CAMERA" />
+12-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:4:5-65
+12-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:4:22-62
+13    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+13-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:5:5-80
+13-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:5:22-77
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:6:5-81
+14-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:6:22-78
+15    <uses-permission android:name="android.permission.WAKE_LOCK" />
+15-->[:react-native-firebase_database] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\database\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:8:5-68
+15-->[:react-native-firebase_database] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\database\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:8:22-65
+16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+16-->[:react-native-firebase_database] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\database\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:9:5-79
+16-->[:react-native-firebase_database] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\database\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:9:22-76
+17
+18    <permission
+18-->[androidx.core:core:1.9.0] C:\Users\Lenovo\.gradle\caches\transforms-4\72b47993cdfd19123fa1328496e151cb\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+19        android:name="com.mobileecommerce.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+19-->[androidx.core:core:1.9.0] C:\Users\Lenovo\.gradle\caches\transforms-4\72b47993cdfd19123fa1328496e151cb\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+20        android:protectionLevel="signature" />
+20-->[androidx.core:core:1.9.0] C:\Users\Lenovo\.gradle\caches\transforms-4\72b47993cdfd19123fa1328496e151cb\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+21
+22    <uses-permission android:name="com.mobileecommerce.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+22-->[androidx.core:core:1.9.0] C:\Users\Lenovo\.gradle\caches\transforms-4\72b47993cdfd19123fa1328496e151cb\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+22-->[androidx.core:core:1.9.0] C:\Users\Lenovo\.gradle\caches\transforms-4\72b47993cdfd19123fa1328496e151cb\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+23
+24    <application
+24-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:8:5-27:19
+25        android:name="com.mobileecommerce.MainApplication"
+25-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:9:7-38
+26        android:allowBackup="false"
+26-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:13:7-34
+27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+27-->[androidx.core:core:1.9.0] C:\Users\Lenovo\.gradle\caches\transforms-4\72b47993cdfd19123fa1328496e151cb\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+28        android:extractNativeLibs="false"
+29        android:icon="@mipmap/ic_launcher"
+29-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:11:7-41
+30        android:label="@string/app_name"
+30-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:10:7-39
+31        android:roundIcon="@mipmap/ic_launcher_round"
+31-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:12:7-52
+32        android:theme="@style/AppTheme" >
+32-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:14:7-38
+33        <activity
+33-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:15:7-26:18
+34            android:name="com.mobileecommerce.MainActivity"
+34-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:16:9-37
+35            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+35-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:18:9-118
+36            android:exported="true"
+36-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:21:9-32
+37            android:label="@string/app_name"
+37-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:17:9-41
+38            android:launchMode="singleTask"
+38-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:19:9-40
+39            android:windowSoftInputMode="adjustResize" >
+39-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:20:9-51
+40            <intent-filter>
+40-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:22:9-25:25
+41                <action android:name="android.intent.action.MAIN" />
+41-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:23:13-65
+41-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:23:21-62
+42
+43                <category android:name="android.intent.category.LAUNCHER" />
+43-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:24:13-73
+43-->D:\mobileE-CommerceApp\android\app\src\main\AndroidManifest.xml:24:23-70
+44            </intent-filter>
+45        </activity>
+46
+47        <meta-data
+47-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:9:9-11:36
+48            android:name="app_data_collection_default_enabled"
+48-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:10:13-63
+49            android:value="true" />
+49-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:11:13-33
+50
+51        <service
+51-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:13:9-21:19
+52            android:name="com.google.firebase.components.ComponentDiscoveryService"
+52-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:14:13-84
+53            android:directBootAware="true"
+53-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:15:13-43
+54            android:exported="false" >
+54-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:16:13-37
+55            <meta-data
+55-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:18:13-20:85
+56                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+56-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:19:17-120
+57                android:value="com.google.firebase.components.ComponentRegistrar" />
+57-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:20:17-82
+58            <meta-data
+58-->[com.google.firebase:firebase-appcheck-playintegrity:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\1c6039fc1d101dcdb3c9465ac1455543\transformed\jetified-firebase-appcheck-playintegrity-18.0.0\AndroidManifest.xml:25:13-27:85
+59                android:name="com.google.firebase.components:com.google.firebase.appcheck.playintegrity.FirebaseAppCheckPlayIntegrityRegistrar"
+59-->[com.google.firebase:firebase-appcheck-playintegrity:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\1c6039fc1d101dcdb3c9465ac1455543\transformed\jetified-firebase-appcheck-playintegrity-18.0.0\AndroidManifest.xml:26:17-144
+60                android:value="com.google.firebase.components.ComponentRegistrar" />
+60-->[com.google.firebase:firebase-appcheck-playintegrity:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\1c6039fc1d101dcdb3c9465ac1455543\transformed\jetified-firebase-appcheck-playintegrity-18.0.0\AndroidManifest.xml:27:17-82
+61            <meta-data
+61-->[com.google.firebase:firebase-database:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\f9a92e4454662b0c78a21d59c3f79455\transformed\jetified-firebase-database-21.0.0\AndroidManifest.xml:29:13-31:85
+62                android:name="com.google.firebase.components:com.google.firebase.database.FirebaseDatabaseKtxRegistrar"
+62-->[com.google.firebase:firebase-database:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\f9a92e4454662b0c78a21d59c3f79455\transformed\jetified-firebase-database-21.0.0\AndroidManifest.xml:30:17-120
+63                android:value="com.google.firebase.components.ComponentRegistrar" />
+63-->[com.google.firebase:firebase-database:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\f9a92e4454662b0c78a21d59c3f79455\transformed\jetified-firebase-database-21.0.0\AndroidManifest.xml:31:17-82
+64            <meta-data
+64-->[com.google.firebase:firebase-database:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\f9a92e4454662b0c78a21d59c3f79455\transformed\jetified-firebase-database-21.0.0\AndroidManifest.xml:32:13-34:85
+65                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+65-->[com.google.firebase:firebase-database:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\f9a92e4454662b0c78a21d59c3f79455\transformed\jetified-firebase-database-21.0.0\AndroidManifest.xml:33:17-109
+66                android:value="com.google.firebase.components.ComponentRegistrar" />
+66-->[com.google.firebase:firebase-database:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\f9a92e4454662b0c78a21d59c3f79455\transformed\jetified-firebase-database-21.0.0\AndroidManifest.xml:34:17-82
+67            <meta-data
+67-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\bdab5b422f6812ed7d09df2cf95df9b7\transformed\jetified-firebase-storage-21.0.0\AndroidManifest.xml:30:13-32:85
+68                android:name="com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar"
+68-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\bdab5b422f6812ed7d09df2cf95df9b7\transformed\jetified-firebase-storage-21.0.0\AndroidManifest.xml:31:17-118
+69                android:value="com.google.firebase.components.ComponentRegistrar" />
+69-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\bdab5b422f6812ed7d09df2cf95df9b7\transformed\jetified-firebase-storage-21.0.0\AndroidManifest.xml:32:17-82
+70            <meta-data
+70-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\bdab5b422f6812ed7d09df2cf95df9b7\transformed\jetified-firebase-storage-21.0.0\AndroidManifest.xml:33:13-35:85
+71                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+71-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\bdab5b422f6812ed7d09df2cf95df9b7\transformed\jetified-firebase-storage-21.0.0\AndroidManifest.xml:34:17-107
+72                android:value="com.google.firebase.components.ComponentRegistrar" />
+72-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\bdab5b422f6812ed7d09df2cf95df9b7\transformed\jetified-firebase-storage-21.0.0\AndroidManifest.xml:35:17-82
+73            <meta-data
+73-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\e1aab58baf2512fe0d0e617a030645db\transformed\jetified-firebase-appcheck-18.0.0\AndroidManifest.xml:25:13-27:85
+74                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar"
+74-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\e1aab58baf2512fe0d0e617a030645db\transformed\jetified-firebase-appcheck-18.0.0\AndroidManifest.xml:26:17-120
+75                android:value="com.google.firebase.components.ComponentRegistrar" />
+75-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\e1aab58baf2512fe0d0e617a030645db\transformed\jetified-firebase-appcheck-18.0.0\AndroidManifest.xml:27:17-82
+76            <meta-data
+76-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\e1aab58baf2512fe0d0e617a030645db\transformed\jetified-firebase-appcheck-18.0.0\AndroidManifest.xml:28:13-30:85
+77                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar"
+77-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\e1aab58baf2512fe0d0e617a030645db\transformed\jetified-firebase-appcheck-18.0.0\AndroidManifest.xml:29:17-117
+78                android:value="com.google.firebase.components.ComponentRegistrar" />
+78-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\e1aab58baf2512fe0d0e617a030645db\transformed\jetified-firebase-appcheck-18.0.0\AndroidManifest.xml:30:17-82
+79            <meta-data
+79-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\2f78ec0360e723953f1d7300bb15535e\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
+80                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+80-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\2f78ec0360e723953f1d7300bb15535e\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:13:17-116
+81                android:value="com.google.firebase.components.ComponentRegistrar" />
+81-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\2f78ec0360e723953f1d7300bb15535e\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:14:17-82
+82            <meta-data
+82-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:35:13-37:85
+83                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+83-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:36:17-109
+84                android:value="com.google.firebase.components.ComponentRegistrar" />
+84-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:37:17-82
+85        </service>
+86
+87        <provider
+87-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:23:9-27:38
+88            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+88-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:24:13-88
+89            android:authorities="com.mobileecommerce.reactnativefirebaseappinitprovider"
+89-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:25:13-86
+90            android:exported="false"
+90-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:26:13-37
+91            android:initOrder="99" />
+91-->[:react-native-firebase_app] D:\mobileE-CommerceApp\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:27:13-35
+92        <provider
+92-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:8:9-16:20
+93            android:name="com.imagepicker.ImagePickerProvider"
+93-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:9:13-63
+94            android:authorities="com.mobileecommerce.imagepickerprovider"
+94-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:10:13-71
+95            android:exported="false"
+95-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:11:13-37
+96            android:grantUriPermissions="true" >
+96-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:12:13-47
+97            <meta-data
+97-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:13:13-15:70
+98                android:name="android.support.FILE_PROVIDER_PATHS"
+98-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:14:17-67
+99                android:resource="@xml/imagepicker_provider_paths" />
+99-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:15:17-67
+100        </provider>
+101        <provider
+101-->[:react-native-webview] D:\mobileE-CommerceApp\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:8:9-16:20
+102            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+102-->[:react-native-webview] D:\mobileE-CommerceApp\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:9:13-83
+103            android:authorities="com.mobileecommerce.fileprovider"
+103-->[:react-native-webview] D:\mobileE-CommerceApp\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:10:13-64
+104            android:exported="false"
+104-->[:react-native-webview] D:\mobileE-CommerceApp\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:11:13-37
+105            android:grantUriPermissions="true" >
+105-->[:react-native-webview] D:\mobileE-CommerceApp\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:12:13-47
+106            <meta-data
+106-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:13:13-15:70
+107                android:name="android.support.FILE_PROVIDER_PATHS"
+107-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:14:17-67
+108                android:resource="@xml/file_provider_paths" />
+108-->[:react-native-image-picker] D:\mobileE-CommerceApp\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:15:17-67
+109        </provider>
+110        <provider
+110-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:23:9-28:39
+111            android:name="com.google.firebase.provider.FirebaseInitProvider"
+111-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:24:13-77
+112            android:authorities="com.mobileecommerce.firebaseinitprovider"
+112-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:25:13-72
+113            android:directBootAware="true"
+113-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:26:13-43
+114            android:exported="false"
+114-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:27:13-37
+115            android:initOrder="100" />
+115-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Lenovo\.gradle\caches\transforms-4\0a99742cc50f31c9288cbc101c8c1df0\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:28:13-36
+116
+117        <activity
+117-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:23:9-27:75
+118            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+118-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:24:13-93
+119            android:excludeFromRecents="true"
+119-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:25:13-46
+120            android:exported="false"
+120-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:26:13-37
+121            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+121-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:27:13-72
+122        <!--
+123            Service handling Google Sign-In user revocation. For apps that do not integrate with
+124            Google Sign-In, this service will never be started.
+125        -->
+126        <service
+126-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:33:9-37:51
+127            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+127-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:34:13-89
+128            android:exported="true"
+128-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:35:13-36
+129            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+129-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:36:13-107
+130            android:visibleToInstantApps="true" />
+130-->[com.google.android.gms:play-services-auth:21.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\d3136789fa44ca6043635df04349135d\transformed\jetified-play-services-auth-21.2.0\AndroidManifest.xml:37:13-48
+131
+132        <activity
+132-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\Lenovo\.gradle\caches\transforms-4\eb83a488f3f3579e7ee4cffb9424a6e8\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:9-22:45
+133            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+133-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\Lenovo\.gradle\caches\transforms-4\eb83a488f3f3579e7ee4cffb9424a6e8\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:19-85
+134            android:exported="false"
+134-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\Lenovo\.gradle\caches\transforms-4\eb83a488f3f3579e7ee4cffb9424a6e8\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:22:19-43
+135            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+135-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\Lenovo\.gradle\caches\transforms-4\eb83a488f3f3579e7ee4cffb9424a6e8\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:21:19-78
+136
+137        <meta-data
+137-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\Lenovo\.gradle\caches\transforms-4\6f18a9b7ec5939a14a6de326d4d59f79\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
+138            android:name="com.google.android.gms.version"
+138-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\Lenovo\.gradle\caches\transforms-4\6f18a9b7ec5939a14a6de326d4d59f79\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
+139            android:value="@integer/google_play_services_version" />
+139-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\Lenovo\.gradle\caches\transforms-4\6f18a9b7ec5939a14a6de326d4d59f79\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
+140
+141        <provider
+141-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\9f9a74b2672f01797b9acb9bf182156d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+142            android:name="androidx.startup.InitializationProvider"
+142-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\9f9a74b2672f01797b9acb9bf182156d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+143            android:authorities="com.mobileecommerce.androidx-startup"
+143-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\9f9a74b2672f01797b9acb9bf182156d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+144            android:exported="false" >
+144-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\9f9a74b2672f01797b9acb9bf182156d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+145            <meta-data
+145-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\9f9a74b2672f01797b9acb9bf182156d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+146                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+146-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\9f9a74b2672f01797b9acb9bf182156d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+147                android:value="androidx.startup" />
+147-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Lenovo\.gradle\caches\transforms-4\9f9a74b2672f01797b9acb9bf182156d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+148            <meta-data
+148-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Lenovo\.gradle\caches\transforms-4\233bf64e06878cb6d71d8349f423cd2f\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+149                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+149-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Lenovo\.gradle\caches\transforms-4\233bf64e06878cb6d71d8349f423cd2f\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+150                android:value="androidx.startup" />
+150-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Lenovo\.gradle\caches\transforms-4\233bf64e06878cb6d71d8349f423cd2f\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+151        </provider>
+152
+153        <meta-data
+153-->[com.facebook.soloader:soloader:0.10.5] C:\Users\Lenovo\.gradle\caches\transforms-4\af7c56a8ead6571d6ca06fd362b28104\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:12:9-14:37
+154            android:name="com.facebook.soloader.enabled"
+154-->[com.facebook.soloader:soloader:0.10.5] C:\Users\Lenovo\.gradle\caches\transforms-4\af7c56a8ead6571d6ca06fd362b28104\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:13:13-57
+155            android:value="false" />
+155-->[com.facebook.soloader:soloader:0.10.5] C:\Users\Lenovo\.gradle\caches\transforms-4\af7c56a8ead6571d6ca06fd362b28104\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:14:13-34
+156    </application>
+157
+158</manifest>

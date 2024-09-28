@@ -25,7 +25,7 @@ import type { AppDispatch } from '../../redux/store';
 import { useDispatch } from 'react-redux'
 import { addReInfoList } from '../../redux/reInfo/receiverInformationSlice'
 import { decreaseVoucherQuantity } from '../../redux/voucher/voucherSlice'
-import { decreaseProductQuantity } from '../../redux/cart/cartSlice'
+import { removeProduct } from '../../redux/cart/cartSlice'
 import store from '../../redux/store'
 
 type Props = StackScreenProps<PaymentStackParamList, 'PaymentScreen'>;
@@ -223,12 +223,13 @@ export default function PaymentScreen({ route, navigation }: Props) {
                     }));
                 });
             });
+            saveVoucherToStorage(store.getState().voucher?.vouchers, store.getState().auth?.token)
         }
         if (selectedProductList.length > 0) {
             store.getState().cart.productList.forEach(shop => {
                 shop.products.forEach(product => {
                     if (product.isSelected) {
-                        dispatch(decreaseProductQuantity({
+                        dispatch(removeProduct({
                             shopId: shop.shopId,
                             productId: product.id,
                             color: product.color
@@ -236,9 +237,8 @@ export default function PaymentScreen({ route, navigation }: Props) {
                     }
                 });
             });
+            saveCartToStorage(store.getState().cart?.productList, store.getState().auth?.token)
         }
-        saveCartToStorage(store.getState().cart?.productList, store.getState().auth?.token)
-        saveVoucherToStorage(store.getState().voucher?.vouchers, store.getState().auth?.token)
     }
 
     const handlePurchase = async () => {  // Check other method not VNPAy
@@ -249,9 +249,12 @@ export default function PaymentScreen({ route, navigation }: Props) {
             }
         }
 
+        if (selectedPaymentMethod?.name !== 'VNPay' && selectedPaymentMethod?.name !== 'Cash') {
+            handlNotify('Payment method is not currently supported')
+            return;
+        }
         try {
-            const axiosInstance = await authAPI();
-            const createOrder = await axiosInstance.post(endpoints.order(store.getState().user.info?.id), {
+            const data = {
                 total_amount: selectedShippingUnit && selectedShippingUnit.fee + totalProductPrice - totalDiscount,
                 products: shopHasSelectedProduct
                     .flatMap(shop => shop.products
@@ -262,30 +265,38 @@ export default function PaymentScreen({ route, navigation }: Props) {
                             quantity: product.quantity,
                         }))
                     ),
-                vouchers: selectedVoucherList.length > 0 ? selectedVoucherList.map(voucher => voucher.id) : [],
+                vouchers: selectedVoucherList.length > 0 ?
+                    selectedVoucherList.flatMap(voucher => voucher.conditions.map(cond => cond.id)) : [],
                 payment_method: selectedPaymentMethod?.id,
                 shipping: selectedShippingUnit?.id
-            });
+            }
+            const axiosInstance = await authAPI();
+            const createOrder = await axiosInstance.post(endpoints.order(store.getState().user.info?.id), data);
+
 
             if (createOrder.status === 201 && createOrder.data) {
-                // decrease product, voucher and save to storage 
                 updateProductVoucherState()
-                try {
-                    const response = await axiosInstance.post(endpoints.payment, {
-                        order_id: createOrder.data.order_id,
-                        amount: createOrder.data.total_amount,
-                    });
-                    if (response.status === 200 && response.data.url) {
-                        navigation.navigate('PaymentResultScreen', { url: response.data.url });
-                    } else {
-                        console.error('Error: URL not found in response');
+                if (selectedPaymentMethod?.name == 'Cash') {
+                    navigation.navigate('HomeNavigator', { screen: 'HomeScreen' });
+                }
+                else {
+                    try {
+                        const response = await axiosInstance.post(endpoints.payment, {
+                            order_id: Number(createOrder.data.order_id),
+                            amount: Number(createOrder.data.total_amount)
+                        });
+                        if (response.status === 200 && response.data) {
+                            navigation.navigate('PaymentResultScreen', { url: response.data.url });
+                        } else {
+                            handlNotify('Error: URL not found in response, plz try again later')
+                        }
+                    } catch (error) {
+                        handlNotify('Error when redirecting to VNPAY, , plz try again later')
                     }
-                } catch (error) {
-                    console.error('Error redirect to VNPAY:', error);
                 }
             }
         } catch (error) {
-            console.error('Error creating order:', error);
+            handlNotify('Error when creating order, plz try again later')
         }
     }
 
@@ -397,12 +408,20 @@ export default function PaymentScreen({ route, navigation }: Props) {
                             {
                                 selectedVoucherList.length > 0 ?
                                     selectedVoucherList?.find(item => item.voucher_type_name === 'All Shops') ?
-                                        <MaterialCommunityIcons
-                                            name={"ticket-percent"}
-                                            size={30}
-                                            color={"#05988a"}
-                                            style={{ marginRight: 5 }}
-                                        />
+                                        <>
+                                            <MaterialCommunityIcons
+                                                name={"ticket-percent"}
+                                                size={30}
+                                                color={"#05988a"}
+                                                style={{ marginRight: 5 }}
+                                            />
+                                            <MaterialCommunityIcons
+                                                name={"ticket-percent"}
+                                                size={30}
+                                                color={'tomato'}
+                                                style={{ marginRight: 5 }}
+                                            />
+                                        </>
                                         :
                                         <MaterialCommunityIcons
                                             name={"ticket-percent"}
@@ -452,20 +471,22 @@ export default function PaymentScreen({ route, navigation }: Props) {
                     <View style={styles.paymentDetailContainer}>
                         <View style={styles.paymentDetailTitle}>
                             <FontAwesome name={"newspaper-o"} size={16} color={colors.darkOrange} style={{}} />
-                            <Text style={{ marginLeft: 10, fontWeight: "500" }}>Payment Detail</Text>
+                            <Text style={{ marginLeft: 10, fontWeight: "500", color: '#000' }}>
+                                Payment Detail
+                            </Text>
                         </View>
                         <View style={styles.wrapTotalProductPrice}>
-                            <Text>Total product price</Text>
-                            <Text>đ{totalProductPrice && formatCurrency(totalProductPrice)}</Text>
+                            <Text style={{ color: '#000' }}>Total product price</Text>
+                            <Text style={{ color: '#000' }}>đ{totalProductPrice && formatCurrency(totalProductPrice)}</Text>
                         </View>
                         <View style={styles.wrapTotalTransportationFee}>
-                            <Text>Total transportation fee</Text>
-                            <Text>{selectedShippingUnit && 'đ' + formatCurrency(selectedShippingUnit.fee)}</Text>
+                            <Text style={{ color: '#000' }}>Total transportation fee</Text>
+                            <Text style={{ color: '#000' }}>{selectedShippingUnit && 'đ' + formatCurrency(selectedShippingUnit.fee)}</Text>
                         </View>
                         {selectedVoucherList.length > 0 &&
                             <View style={styles.wrapProductDiscount}>
-                                <Text>Product discount</Text>
-                                <Text>- đ{formatCurrency(totalDiscount)}</Text>
+                                <Text style={{ color: '#000' }}>Product discount</Text>
+                                <Text style={{ color: '#000' }}>- đ{formatCurrency(totalDiscount)}</Text>
                             </View>
                         }
                         {/*
@@ -474,7 +495,7 @@ export default function PaymentScreen({ route, navigation }: Props) {
                                 <Text>- đ{FormatCurrency(productDiscount)}</Text>
                             </View> */}
                         <View style={styles.wrapTotal}>
-                            <Text style={{ fontSize: 16, }}>Total</Text>
+                            <Text style={{ fontSize: 16, color: '#000' }}>Total</Text>
                             <Text style={{ color: colors.darkOrange, fontSize: 16, }}>
                                 đ{
                                     selectedShippingUnit ?
@@ -488,9 +509,9 @@ export default function PaymentScreen({ route, navigation }: Props) {
                     {/* Noti terms */}
                     <View style={styles.notiTermsContainer}>
                         <FontAwesome name={"newspaper-o"} size={16} color={colors.darkOrange} style={{}} />
-                        <Text style={{ marginLeft: 10, fontSize: 12 }}>
+                        <Text style={{ marginLeft: 10, fontSize: 12, color: '#000' }}>
                             Clicking "
-                            <Text style={{ fontWeight: "500", fontSize: 12 }}>Purchase</Text>
+                            <Text style={{ fontWeight: "500", fontSize: 12, color: '#000' }}>Purchase</Text>
                             " means obeying our
                             <Text style={{ textDecorationLine: "underline", color: colors.blueSky }}> terms</Text>
                         </Text>

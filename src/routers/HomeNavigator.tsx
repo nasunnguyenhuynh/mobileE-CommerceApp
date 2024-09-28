@@ -25,7 +25,7 @@ const HomeNavigator = () => {
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: 'tomato',
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: 'black',
                 tabBarShowLabel: false,
             })}
             initialRouteName="HomeScreen"

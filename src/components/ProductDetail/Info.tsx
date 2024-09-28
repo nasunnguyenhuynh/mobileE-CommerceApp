@@ -91,6 +91,7 @@ const Info = ({ material = '', manufactory = '' }: { material: string, manufacto
               fontSize: 16,
               fontWeight: "500",
               textTransform: 'capitalize',
+              color: '#000'
             }}
           >Product details</Text >
         </View>
@@ -100,7 +101,7 @@ const Info = ({ material = '', manufactory = '' }: { material: string, manufacto
           style={styles.wrapProductDetailSeeMore}
           onPress={() => setOpenModal(true)}
         >
-          <Text>Origin, Material, ..</Text>
+          <Text style={{ color: '#000' }}>Origin, Material, ..</Text>
           <AntDesign name={openModel ? 'caretup' : 'caretdown'} size={16} />
         </TouchableOpacity>
       </View>
@@ -152,5 +153,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     flexWrap: 'wrap',
+    color: '#000'
   },
 })

@@ -19,8 +19,6 @@ import remainDateTime from '../constants/remainDateTime';
 export const loadCartFromStorage = async (token: string | undefined) => {
     try {
         const cartData = await AsyncStorage.getItem(`${CART_KEY}_${token}`);
-        console.log('cartData ', cartData);
-
         return cartData ? JSON.parse(cartData) : [];
     } catch (error) {
         console.error('Failed to load cart from storage', error);
@@ -31,8 +29,6 @@ export const loadCartFromStorage = async (token: string | undefined) => {
 export const loadVoucherFromStorage = async (token: string | undefined) => {
     try {
         const voucherData = await AsyncStorage.getItem(`${VOUCHER_KEY}_${token}`);
-        console.log('voucherData ', voucherData);
-
         return voucherData ? JSON.parse(voucherData).filter((voucher: MyVoucher) => 
             remainDateTime(voucher.end_date) !== "Time has passed.") : [];
     } catch (error) {
@@ -45,9 +41,7 @@ export const saveCartToStorage = async (products: SelectedProductList[], token: 
     try {
         // Get products from storage
         let cartData: SelectedProductList[] = await loadCartFromStorage(token);
-        console.log('storage_cartData ', cartData);
         cartData = [...products]
-        console.log('updated cart ', cartData);
         // Save the updated cartData back to AsyncStorage
         await AsyncStorage.setItem(`${CART_KEY}_${token}`, JSON.stringify(cartData));
 

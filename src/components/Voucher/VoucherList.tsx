@@ -26,7 +26,6 @@ const VoucherList = () => {
         try {
             const response = await api.get(endpoints.vouchers);
             if (response.status === 200 && response.data) {
-                console.log('fetchVoucherData: ', response.data);
                 setVouchers(response.data.filter((voucher: Voucher) =>
                     remainDateTime(voucher.end_date) !== "Time has passed."));
             }

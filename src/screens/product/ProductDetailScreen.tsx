@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useRef } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import AntDesign from "react-native-vector-icons/AntDesign"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { colors as useColor } from '../../constants/colors';
 //components
-import Carousel from '../../components/ProductDetail/Carousel';
-import PriceNameRatingSold from '../../components/ProductDetail/PriceNameRatingSold';
-import Delivery from '../../components/ProductDetail/Delivery';
-import Shop from '../../components/ProductDetail/Shop';
-import Info from '../../components/ProductDetail/Info';
-import Description from '../../components/ProductDetail/Description';
-import Review from '../../components/ProductDetail/Review';
-import AddToCart from '../../components/ProductDetail/AddToCart';
+import {
+    Carousel,
+    PriceNameRatingSold,
+    Delivery,
+    Shop,
+    Info,
+    Description,
+    Review,
+    AddToCart
+} from '../../components'
 import useModal from '../../hooks/useModal'
 //navigation
 import { StackScreenProps } from '@react-navigation/stack';
@@ -78,7 +80,7 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
                             sold={sold} />
 
                         {/* Delivery */}
-                        <Delivery/>  
+                        <Delivery />
 
                         {/* Shop */}
                         <Shop id={shop_id} />

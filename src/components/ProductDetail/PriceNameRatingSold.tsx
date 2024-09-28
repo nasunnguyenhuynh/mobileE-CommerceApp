@@ -3,14 +3,20 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { colors } from '../../constants/colors';
 import formatCurrency from '../../constants/formatCurrency';
+// navigation
+import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
 
 const PriceNameRatingSold = ({ productId = 0, categoryId = 0, price = 0, name = '', rating = 0, sold = 0 }:
   { productId: number, categoryId: number, price: number, name: string, rating: number, sold: number }) => {
+  const navigation = useNavigation<NavigationProp<any>>();
+
   return (
     <View style={styles.containerPriceNameRatingSold}>
       <View style={styles.wrapProductName}>
         <Text
           style={{
+            color: '#000',
             fontSize: 18,
             fontWeight: "600",
             flexWrap: 'wrap',
@@ -28,7 +34,7 @@ const PriceNameRatingSold = ({ productId = 0, categoryId = 0, price = 0, name = 
                 size={14}
                 color={colors.darkOrange}
               />
-              <Text style={{ fontSize: 14, marginLeft: 5, }}>{Math.round(rating * 10) / 10}/5</Text>
+              <Text style={{ fontSize: 14, marginLeft: 5, color: '#000', }}>{Math.round(rating * 10) / 10}/5</Text>
             </View>
             <View
               style={{
@@ -44,7 +50,7 @@ const PriceNameRatingSold = ({ productId = 0, categoryId = 0, price = 0, name = 
         </View>
         <View >
           <TouchableOpacity style={styles.btnCompareProduct}
-          // onPress={() => { navigation.navigate('NavProduct', { productId, categoryId }) }}
+            onPress={() => { navigation.navigate('ProductComparisionScreen', { data: { productId, categoryId } }) }}
           >
             <FontAwesome
               name={"magic"}

@@ -86,10 +86,10 @@ const ProductList = () => {
             <TouchableOpacity key={item?.id.toString()} style={styles.containerProductCard} onPress={() => handleProductPress(item?.id)}>
                 <Image style={styles.image} source={{ uri: item?.images[0].image }} />
                 <View style={{ margin: 4 }}>
-                    <Text numberOfLines={2} ellipsizeMode="tail">{item?.name}</Text>
+                    <Text numberOfLines={2} ellipsizeMode="tail" style={{ color: '#000' }}>{item?.name}</Text>
                     <View style={styles.wrapRating}>
                         <FontAwesome name={"star"} size={10} color={"#e7700d"} />
-                        <Text style={{ fontSize: 8 }}>{Math.round(item?.product_rating * 10) / 10}</Text>
+                        <Text style={{ fontSize: 8, color: '#000' }}>{Math.round(item?.product_rating * 10) / 10}</Text>
                     </View>
                     <View style={styles.wrapPriceSold}>
                         <Text style={{ fontSize: 16, color: "#cf3131", textDecorationLine: 'underline' }}>{formatCurrency(item?.price)}đ</Text>

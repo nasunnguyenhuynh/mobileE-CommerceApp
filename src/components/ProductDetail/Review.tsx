@@ -23,15 +23,12 @@ const Review = ({ productId = 0, shopId = 0, productRating = 0 }:
         const response2 = await axiosInstance.get(endpoints.shopReview(shopId));
         const response3 = await axiosInstance.get(endpoints.shop_id(shopId));
         if (response.status === 200 && response.data) {
-          // console.log('Review.tsx ', response.data) 
           setProductReview(response.data);
         }
         if (response2.status === 200 && response2.data) {
-          // console.log('shopReview ', response.data) 
           setShopReview(response2.data);
         }
         if (response3.status === 200 && response3.data) {
-          // console.log('shopReview ', response.data) 
           setShopRating(response3.data.shop_rating);
         }
       } catch (error) {
@@ -60,6 +57,7 @@ const Review = ({ productId = 0, shopId = 0, productRating = 0 }:
               fontSize: 16,
               fontWeight: "500",
               textTransform: 'capitalize',
+              color: '#000'
             }}>Product Ratings</Text>
           </View>
           <View style={styles.reviewTitleDetail}>

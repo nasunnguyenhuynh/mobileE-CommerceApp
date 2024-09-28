@@ -118,11 +118,11 @@ const AddToCart: React.FC<AddToCartProps> =
                   <View>
                     <View style={styles.btnSelectQuantity}>
                       <TouchableOpacity style={styles.btnDecrease} onPress={decreaseQuantity}>
-                        <Text>-</Text>
+                        <Text style={{ color: '#000', fontWeight: 'bold' }}>-</Text>
                       </TouchableOpacity>
-                      <Text>{quantity}</Text>
+                      <Text style={{ color: '#000' }}>{quantity}</Text>
                       <TouchableOpacity style={styles.btnIncrease} onPress={increaseQuantity}>
-                        <Text>+</Text>
+                        <Text style={{ color: '#000' }}>+</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -144,13 +144,13 @@ const AddToCart: React.FC<AddToCartProps> =
                       toggleModal();
                     }}
                   >
-                    <Text style={{ fontSize: 18 }}>Add to cart</Text>
+                    <Text style={{ fontSize: 18, color: '#000' }}>Add to cart</Text>
                     {/* price, quantity, name, color */}
                   </TouchableOpacity> :
                   <View
                     style={[styles.btnAddToCart, { backgroundColor: 'gray' }]}
                   >
-                    <Text style={{ fontSize: 18 }}>Add to cart</Text>
+                    <Text style={{ fontSize: 18, color: '#000' }}>Add to cart</Text>
                   </View>
               }
             </View>
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
   },
   textQuantity: {
     fontSize: 14,
+    color: '#000'
   },
   btnSelectQuantity: {
     flexDirection: "row",

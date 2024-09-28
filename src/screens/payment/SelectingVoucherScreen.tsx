@@ -40,18 +40,15 @@ const SelectingVoucherScreen = ({ route, navigation }: Props) => {
                 return false;
             }
             if (condition.min_order_amount > totalProductPrice) { // Check totalProductPrice
-                console.log('Check totalProductPrice ');
                 return false;
             }
             if (!condition.shippings.find(item => item.name === selectedShippingUnit.name)) { // Check selectedShippingUnit
-                console.log('Check selectedShippingUnit');
                 return false;
             }
             if (condition.categories.length > 0) { // Check categories
                 const result = selectedProductList.map(item => item.category).
                     find(item => !condition.categories.map(item => item.id).includes(item));
                 if (result) {
-                    console.log('Check categories', result);
                     return false;
                 }
             }
@@ -59,14 +56,12 @@ const SelectingVoucherScreen = ({ route, navigation }: Props) => {
                 const result = selectedProductList.map(item => item.id).
                     find(item => !condition.products.map(item => item.id).includes(item))
                 if (result) {
-                    console.log('Check selectedProductList', result);
                     return false;
                 }
             }
             if (condition.payment_methods.length > 0) { // Check selectedPaymentMethod
                 const result = condition.payment_methods.find(item => item.id == selectedPaymentMethod.id)
                 if (!result) {
-                    console.log('Check selectedPaymentMethod ');
                     return false;
                 }
             }
@@ -81,17 +76,14 @@ const SelectingVoucherScreen = ({ route, navigation }: Props) => {
             navigation.navigate('VoucherNavigator', {
                 screen: 'VoucherConditionScreen'
             })
-            console.log("View condition");
         }
 
         const handleCheckVoucher = () => {
             if (isChecked) {
-                console.log("Checked");
                 const result = selectedVoucherList.filter(item => item.id !== voucher.id)
                 setSelectedVoucherList(result);
             }
             else {
-                console.log("!Checked");
                 setSelectedVoucherList(prev => [...prev, voucher])
             }
             setIsChecked(!isChecked);

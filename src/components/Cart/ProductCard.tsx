@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Alert, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import formatCurrency from '../../constants/formatCurrency';
 import api, { endpoints } from '../../utils/api';
 import { Product } from '../../interfaces/product';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import { SelectedProductDetail } from '../../interfaces/product';
+//
+import CartContext from '../../Context/CartContext';
 // redux
 import type { AppDispatch } from '../../redux/store';
 import { useDispatch } from 'react-redux'
@@ -30,11 +32,22 @@ const ProductCard = ({
     // declare states
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState<Product | null>(null);
+    //
+    const context = useContext(CartContext);
+
+    if (!context) {
+        throw new Error('ProductCard must be used within a CartScreen');
+    }
+
+    const { denyPurchase, setDenyPurchase } = context;
 
     const getProductByID = async (id: number) => {
         const response = await api.get(endpoints.products_id(id));
         if (response.status === 200 && response.data) {
             setProduct(response.data);
+            if (response.data.remain === 0) {
+                setDenyPurchase(denyPurchase + 1)
+            }
         }
         setLoading(false);
     };
@@ -74,15 +87,17 @@ const ProductCard = ({
             ],
             { cancelable: true }
         );
+        setDenyPurchase(denyPurchase - 1);
     }
 
-    var productQuantity = store.getState().cart.productList.
-        find(shop => shop.shopId === shopId)?.products.
+    var shop = store.getState().cart.productList.
+        find(shop => shop.shopId === shopId)
+
+    var productQuantity = shop?.products.
         find(product => product.id === id && product.color === color)?.quantity
 
-    var isCheckedBox = store.getState().cart.productList
-        .find(shop => shop.shopId === shopId)?.products
-        .find(product => product.isSelected === true && product.id === id && product.color === color);
+    var isCheckedBox = shop?.products.
+        find(product => product.isSelected === true && product.id === id && product.color === color);
 
     const handleDecrease = () => {
         if (productQuantity && productQuantity > 1) {

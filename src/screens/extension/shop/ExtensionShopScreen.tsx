@@ -1,5 +1,4 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack';
 import { ExtensionShopStackParamList } from '../../types';
 import { createStackNavigator } from '@react-navigation/stack';

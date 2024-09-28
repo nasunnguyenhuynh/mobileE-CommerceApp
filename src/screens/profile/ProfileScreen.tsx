@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { Image, StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, ScrollView, RefreshControl, } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, ScrollView, RefreshControl, } from 'react-native';
 import { Badge } from "react-native-elements";
-import { ExtensionElement } from '../../components';
-import AntDesign from "react-native-vector-icons/AntDesign"
-import FontAwesome from "react-native-vector-icons/FontAwesome"
-import Ionicons from "react-native-vector-icons/Ionicons"
-import Feather from "react-native-vector-icons/Feather"
+import AntDesign from "react-native-vector-icons/AntDesign";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { colors } from '../../constants/colors';
-
+import { authAPI, endpoints } from '../../utils/api';
+// Components
+import { ExtensionElement, OrderProcessElement, Cart } from '../../components';
 // Redux
 import type { RootState, AppDispatch } from '../../redux/store';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { currentUser, clearUser } from '../../redux/user/userSlice';
 import { logout } from '../../redux/auth/authSlice';
 import { getShopConfirmation, clearShopConfirmation } from '../../redux/user/userShopConfirmationSlice';
@@ -20,17 +20,15 @@ import { clearReInfo } from '../../redux/reInfo/receiverInformationSlice';
 import { clearLocalStorage } from '../../redux/storage';
 import { saveCartToStorage, saveVoucherToStorage } from '../../redux/storage';
 import store from '../../redux/store';
+// interfaces
+import { Order } from '../../interfaces/order';
 // Navigation
-import { ProfileStackParamList, RootStackParamList } from '../../routers/types'
-import { useNavigation, CompositeNavigationProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-type ProfileScreenNavigationProp = CompositeNavigationProp<
-    StackNavigationProp<ProfileStackParamList, 'ProfileScreen'>,
-    StackNavigationProp<RootStackParamList>
->;
+import { HomeStackParamList } from '../../routers/types';
+import { StackScreenProps } from '@react-navigation/stack';
+type Props = StackScreenProps<HomeStackParamList, 'ProfileScreen'>;
 
-const ProfileScreen = () => {
-    const navigation = useNavigation<ProfileScreenNavigationProp>();
+const ProfileScreen = ({ navigation }: Props) => {
+    // const navigation = useNavigation<ProfileScreenNavigationProp>();
     const dispatch = useDispatch<AppDispatch>()
     const {
         status: user_status,
@@ -43,24 +41,107 @@ const ProfileScreen = () => {
         error: shopConfirmation_error
     } = useSelector((state: RootState) => state.userShopConfirmation);
 
+
+    // Cart_Chat
+    const numberMessage = 12;
+    const numberProductInCart = 27;
+
+    // Profile
+    const handleEditProfile = () => {
+        navigation.navigate('ProfileNavigator', { screen: 'EditProfileScreen' })
+    }
+
+    // Order
+    const [order, setOrder] = useState<Order[]>([]);
+    const [orderConfirming, setOrderConfirming] = useState<Order[]>([]);
+    const [orderPacking, setOrderPacking] = useState<Order[]>([]);
+    const [orderDelivering, setOrderDelivering] = useState<Order[]>([]);
+    const [orderDelivered, setOrderDelivered] = useState<Order[]>([]);
+    const [orderNotRated, setOrderNotRated] = useState<Order[]>([]);
+    const [orderCanceled, setOrderCanceled] = useState<Order[]>([]);
+    const [orderReturned, setOrderReturned] = useState<Order[]>([]);
+
+    const classifyOrders = (orders: Order[]) => {
+        const confirming: Order[] = [];
+        const packing: Order[] = [];
+        const delivering: Order[] = [];
+        const delivered: Order[] = [];
+        const notRated: Order[] = [];
+        const canceled: Order[] = [];
+        const returned: Order[] = [];
+
+        orders.forEach(order => {
+            const status = order.status;
+            switch (status) {
+                case "Order Handling":
+                    confirming.push(order);
+                    break;
+                case "Paid":
+                    confirming.push(order);
+                    break;
+                case "Order Packing":
+                    packing.push(order);
+                    break;
+                case "Order Delivering":
+                    delivering.push(order);
+                    break;
+                case "Order Delivered":
+                    delivered.push(order);
+                    break;
+                case "Order Canceled":
+                    canceled.push(order);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        delivered.forEach(order => {
+            if (!order.product_review || !order.shop_review) {
+                notRated.push(order);
+            }
+        })
+
+        setOrderConfirming(confirming);
+        setOrderPacking(packing);
+        setOrderDelivering(delivering);
+        setOrderDelivered(delivered);
+        setOrderNotRated(notRated);
+        setOrderCanceled(canceled);
+        setOrderReturned(returned);
+    };
+
+    const fetchOrder = async () => {// refresh, 1st_mounted
+        try {
+            const axiosInstance = await authAPI();
+            const dataOrder = await axiosInstance.get(endpoints.order(store.getState().user.info?.id));
+            setOrder(dataOrder.data);
+            classifyOrders(dataOrder.data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
+
+    //Refresh ProfileScreen
+    const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = () => {
+        dispatch(currentUser());
+    };
+
     useEffect(() => {
         if (user_status === 'success' && user_info?.id) {
             dispatch(getShopConfirmation(user_info.id));
+            fetchOrder();
         }
     }, [user_info]);
 
-    //More
-    const numberMessage = 12;
-    const numberProductInCart = 27;
-    //Refresh ProfileScreen
-    const [refreshing, setRefreshing] = useState(false);
-    const onRefresh = () => { dispatch(currentUser()) };
+    const handleShop = () => {
+        navigation.navigate('ExtensionNavigator', {
+            screen: 'ExtensionShopScreen'
+        })
+    };
 
     const handleLogout = () => { //removeToken & resetState
-        console.log("LOGOUT");
-        console.log('profile_state', store.getState()?.cart);
-        console.log('voucher', store.getState()?.voucher);
-
         saveCartToStorage(store.getState().cart?.productList, store.getState().auth?.token)
         saveVoucherToStorage(store.getState().voucher?.vouchers, store.getState().auth?.token)
         dispatch(clearShopConfirmation())
@@ -70,13 +151,7 @@ const ProfileScreen = () => {
         dispatch(logout())
         dispatch(clearReInfo())
         // clearLocalStorage()
-        navigation.navigate('Login');
-    };
-
-    const handleShop = () => {
-        navigation.navigate('ExtensionNavigator', {
-            screen: 'ExtensionShopScreen'
-        })
+        navigation.navigate('AuthNavigator', { screen: 'Login' });
     };
 
     return (
@@ -91,7 +166,9 @@ const ProfileScreen = () => {
                     <View style={{ marginHorizontal: 10 }}>
                         <View style={styles.wrapHeaderProfile}>
                             <View style={styles.wrapUserInfo} >
-                                <TouchableOpacity style={styles.avatarContainer} >
+                                <TouchableOpacity style={styles.avatarContainer}
+                                    onPress={handleEditProfile}
+                                >
                                     <Image
                                         source={{ uri: user_info?.avatar }}
                                         style={styles.avatar}
@@ -119,34 +196,7 @@ const ProfileScreen = () => {
                                         color={"black"}
                                     />
                                 </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Feather
-                                        name={"shopping-cart"}
-                                        size={30}
-                                        color={"black"}
-                                    // style={styles.socialIcon}
-                                    />
-                                    <Badge
-                                        badgeStyle={{
-                                            backgroundColor: "#cf3131",
-                                        }}
-                                        containerStyle={{
-                                            position: 'absolute',
-                                            top: -6,
-                                            right: -6,
-                                        }}
-                                        onPress={() => {
-                                            // alert("message");
-                                        }}
-                                        status="error"
-                                        textProps={{}}
-                                        textStyle={{
-                                            fontSize: 10,
-                                        }}
-                                        value={numberProductInCart}
-                                    // options={{}}
-                                    />
-                                </View>
+                                <Cart />
                                 <View style={{ position: 'relative' }}>
                                     <Ionicons
                                         name={"chatbubbles-outline"}
@@ -186,10 +236,56 @@ const ProfileScreen = () => {
                                 onRefresh={onRefresh} />
                         }
                     >
+                        {/*Order*/}
+                        <View style={styles.wrapOrder}>
+                            <View style={styles.wrapOrderTitle}>
+                                <Text style={{ fontWeight: "500", color: '#000' }}>Order</Text>
+                                <TouchableOpacity onPress={() => {
+                                    navigation.navigate('OrderNavigator', {
+                                        screen: 'OrderScreen',
+                                        params: {
+                                            orderConfirming: orderConfirming, orderPacking: orderPacking,
+                                            orderDelivering: orderDelivering, orderDelivered: orderDelivered,
+                                            orderCanceled: orderCanceled, orderReturned: orderReturned
+                                        }
+                                    })
+                                }}>
+                                    <Text style={{ color: "#3169f5", textDecorationLine: 'underline' }}>
+                                        Order History
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.wrapOrderProcess}>
+                                <OrderProcessElement
+                                    iconType={"Ionicons"}
+                                    iconName={"wallet-outline"}
+                                    text={"Confirming"}
+                                    value={orderConfirming.length}
+                                />
+                                <OrderProcessElement
+                                    iconType={"Feather"}
+                                    iconName={"package"}
+                                    text={"Packing"}
+                                    value={orderPacking.length}
+                                />
+                                <OrderProcessElement
+                                    iconType={"Feather"}
+                                    iconName={"truck"}
+                                    text={"Delivering"}
+                                    value={orderDelivering.length}
+                                />
+                                <OrderProcessElement
+                                    iconType={"AntDesign"}
+                                    iconName={"staro"}
+                                    text={"Rating"}
+                                    value={orderNotRated.length}
+                                />
+                            </View>
+                        </View>
                         {/*Extension*/}
                         <View style={styles.wrapExtension}>
                             <View style={styles.wrapExtensionTitle}>
-                                <Text style={{ fontWeight: "500" }}>Extension</Text>
+                                <Text style={{ fontWeight: "500", color: '#000' }}>Extension</Text>
                             </View>
                             <View style={styles.wrapExtensionComponent}>
                                 <TouchableOpacity style={{ width: "48%" }}>
@@ -268,7 +364,7 @@ const ProfileScreen = () => {
                         {/*Short cut*/}
                         <View style={styles.wrapSupport}>
                             <View style={styles.wrapSupportTitle}>
-                                <Text style={{ fontWeight: "500" }}>Short cut</Text>
+                                <Text style={{ fontWeight: "500", color: '#000' }}>Short cut</Text>
                             </View>
                             <View style={styles.wrapSupportComponent}>
                                 <TouchableOpacity onPress={handleLogout}>

@@ -1,8 +1,5 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { HOST } from "@env";
-
-
 
 export const endpoints = {
     'currentUser': '/users/current-user/', //GET, PATCH
@@ -13,6 +10,7 @@ export const endpoints = {
     'verifyOTP': '/accounts/verify-otp/',
 
     'categories': '/categories/',
+    'categories_id': (id) => `/categories/${id}/products/`,
     'shipping-unit': '/shipping-unit/',
     'vouchers': '/vouchers/',
     'voucher': (voucherId, conditionId) => `vouchers/${voucherId}/condition/${conditionId}/`,
@@ -34,6 +32,7 @@ export const endpoints = {
     'address-phone': (userId) => `/users/${userId}/address-phone/`, //GET, POST, DELETE, PATCH
 
     'order': (userId) => `/users/${userId}/orders/`, //GET, POST
+    'order-detail': (userId, orderId) => `/users/${userId}/orders/${orderId}/`,
     'payment-method': '/payment-method/',
     'payment': '/payment/',
 }
@@ -42,7 +41,7 @@ export const authAPI = async () => {
     const token = await AsyncStorage.getItem('access_token');
 
     return axios.create({
-        baseURL: HOST,
+        baseURL: process.env.HOST,
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -50,5 +49,5 @@ export const authAPI = async () => {
 };
 
 export default axios.create({
-    baseURL: HOST
+    baseURL: process.env.HOST
 })

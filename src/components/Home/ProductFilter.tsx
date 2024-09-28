@@ -15,7 +15,6 @@ const ProductFilter = ({ visible, toggleModal, onApplyFilters }: ProductFilterPr
 
     const [sortOrder, setSortOrder] = useState(null); // null, 'oni', or 'ond'
     const handleSortOrder = (order: any) => {
-        console.log('order ', order)
         setSortOrder(prevOrder => (prevOrder === order ? null : order));
     };
 

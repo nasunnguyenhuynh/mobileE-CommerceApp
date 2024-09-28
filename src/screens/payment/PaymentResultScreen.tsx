@@ -5,6 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import formatCurrency from '../../constants/formatCurrency'
 import { authAPI } from '../../utils/api'
 import { WebView } from 'react-native-webview';
+import 'react-native-url-polyfill/auto';
 import { colors } from '../../constants/colors'
 // navigation
 import { StackScreenProps } from '@react-navigation/stack';
@@ -42,7 +43,6 @@ const PaymentResultScreen = ({ route, navigation }: Props) => {
     };
 
     if (!url) {
-        //console.error('url is undefined');
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text>url is missing</Text>

@@ -10,8 +10,7 @@ import ProductCard from './ProductCard';
 import api, { endpoints } from '../../utils/api';
 import { Shop } from '../../interfaces/shop';
 // redux
-import type { AppDispatch } from '../../redux/store';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toggleSelectedShop } from '../../redux/cart/cartSlice';
 import store from '../../redux/store';
 
@@ -90,7 +89,7 @@ const ShopCard = ({
                         <View style={[globalStyles.center, { marginRight: 10 }]}>
                             <Feather name="truck" size={24} color="powderblue" />
                         </View>
-                        <Text numberOfLines={2} style={{ color: '#000', fontSize: 16, flex: 1, flexWrap: 'wrap' }}>I'm sending out an occasional email with the latest tutorials on programming, web development, and statistics. Drop your email in the box below and I'll send new stuff straight into your inbox!</Text>
+                        <Text numberOfLines={2} style={{ color: '#000', fontSize: 16, flex: 1, flexWrap: 'wrap' }}>Instacart is probably the most well-known of the grocery delivery services, as it sends personal shoppers to a grocery store in your area of your choosing.</Text>
                     </View>
                     <AntDesign name="right" size={14} color="gray" />
                 </TouchableOpacity>

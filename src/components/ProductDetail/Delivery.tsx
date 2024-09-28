@@ -37,6 +37,7 @@ const Delivery = () => {
       <View style={styles.wrapDeliveryTitle}>
         <Text style={{
           fontWeight: "500",
+          color: '#000'
         }}>Delivery Fee</Text>
         <Text style={{
           marginLeft: 10,
@@ -45,19 +46,12 @@ const Delivery = () => {
         }}>đ{item?.fee ? formatCurrency(item?.fee) : 'Not found'}</Text>
       </View>
       <View style={styles.wrapDeliveryText}>
-        <Text style={styles.deliveryText}>
+        <Text style={[styles.deliveryText, { color: '#000', fontWeight: 'bold' }]}>
           Shipping unit: {item?.name ? item?.name : 'Not found'}</Text>
         <Text style={styles.deliveryText}>
           Guaranteed delivery from {`${day}`} - {`${day + 5}/${month}/${year}`}
         </Text>
         <Text style={styles.deliveryText}>Receive a voucher worth 10.000đ if your order arrives later than expected</Text>
-        {/* <View style={{
-          marginVertical: 5,
-        }}>
-          <TouchableOpacity onPress={() => setOpenModal(true)}>
-            <Text style={{ color: colors.blueSky }}>See more</Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
     </View>
   );
@@ -129,6 +123,7 @@ const Delivery = () => {
       <View style={styles.wrapDeliveryTitle}>
         <Text style={{
           fontWeight: "500",
+          color: '#000'
         }}>Delivery Fee</Text>
         <Text style={{
           marginLeft: 10,
@@ -137,7 +132,7 @@ const Delivery = () => {
         }}>đ{shippingUnit[0]?.fee ? formatCurrency(shippingUnit[0]?.fee) : 'Not found'}</Text>
       </View>
       <View style={styles.wrapDeliveryText}>
-        <Text style={styles.deliveryText}>
+        <Text style={[styles.deliveryText, { color: '#000', fontWeight: '400' }]}>
           Shipping unit: {shippingUnit[0]?.name ? shippingUnit[0]?.name : 'Not found'}</Text>
         <Text style={styles.deliveryText}>
           Guaranteed delivery from {`${day}`} - {`${day + 5}/${month}/${year}`}

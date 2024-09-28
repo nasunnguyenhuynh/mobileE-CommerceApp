@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ReviewProductScreen from './ReviewProductScreen';
 import ReviewShopScreen from './ReviewShopScreen';
 import ReviewCommentScreen from './ReviewCommentScreen';
 //navigation
-import { ReviewStackParamList } from '../types';
+import { ReviewScreenStackParamList } from '../types';
 
-const ReviewStack = createMaterialTopTabNavigator<ReviewStackParamList>();
+const ReviewStack = createMaterialTopTabNavigator<ReviewScreenStackParamList>();
 const ReviewScreen = ({ route }: { route: any }) => {
     const { productReview, shopReview, productRating, shopRating, productId } = route.params;
 

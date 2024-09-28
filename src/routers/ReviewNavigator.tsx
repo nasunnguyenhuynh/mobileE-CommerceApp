@@ -4,17 +4,17 @@ import { ReviewStackParamList } from './types';
 
 import { ReviewScreen, ReviewFormScreen } from '../screens';
 
-const ExtensionStack = createStackNavigator<ReviewStackParamList>();
+const ReviewStack = createStackNavigator<ReviewStackParamList>();
 const ReviewNavigator = () => {
     return (
-        <ExtensionStack.Navigator>
-            <ExtensionStack.Screen
+        <ReviewStack.Navigator>
+            <ReviewStack.Screen
                 name='ReviewScreen' component={ReviewScreen}>
-            </ExtensionStack.Screen>
-            <ExtensionStack.Screen
+            </ReviewStack.Screen>
+            <ReviewStack.Screen
                 name='ReviewFormScreen' component={ReviewFormScreen}>
-            </ExtensionStack.Screen>
-        </ExtensionStack.Navigator>
+            </ReviewStack.Screen>
+        </ReviewStack.Navigator>
     )
 }
 
