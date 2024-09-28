@@ -130,4 +130,7 @@ dist
 .pnp.*
 
 # android apk
-android/app/build/outputs/
+android/app/build/
+
+# google-services.json
+android/app/google-services.json

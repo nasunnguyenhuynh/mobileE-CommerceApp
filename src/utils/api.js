@@ -1,5 +1,6 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { HOST } from '@env'
 
 export const endpoints = {
     'currentUser': '/users/current-user/', //GET, PATCH
@@ -41,7 +42,7 @@ export const authAPI = async () => {
     const token = await AsyncStorage.getItem('access_token');
 
     return axios.create({
-        baseURL: process.env.HOST,
+        baseURL: HOST,
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -49,5 +50,5 @@ export const authAPI = async () => {
 };
 
 export default axios.create({
-    baseURL: process.env.HOST
+    baseURL: HOST
 })
